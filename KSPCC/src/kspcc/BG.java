@@ -17,7 +17,6 @@ public class BG extends JPanel{
     private final ArrayList<String> units = new ArrayList<>(); 
     private int unit = 1;
     
-    private JPanel elementContainer;
     
     private JComboBox referenceBox;
     private JComboBox firstBodyBox;
@@ -108,10 +107,10 @@ public class BG extends JPanel{
         }
         setBackground(BGCOLOR);
         
-        elementContainer = new JPanel();
-        elementContainer.setPreferredSize(new Dimension(f.getPreferredSize().width, f.getPreferredSize().height - 100));
-        elementContainer.setBackground(BGCOLOR);
-        elementContainer.setLayout(new GridBagLayout());
+        setPreferredSize(f.getPreferredSize());
+        setMinimumSize(f.getMinimumSize());
+        setBackground(BGCOLOR);
+        setLayout(new GridBagLayout());
         
         //The title
         GridBagConstraints c = new GridBagConstraints();
@@ -122,7 +121,7 @@ public class BG extends JPanel{
         title.setFont(GLOBALFONT.deriveFont(Font.BOLD, 25));
         title.setBackground(BGCOLOR);
         title.setForeground(FONTCOLOR);
-        elementContainer.add(title, c);
+        add(title, c);
         
         //The Reference Body Selector Label
         c = new GridBagConstraints();
@@ -134,7 +133,7 @@ public class BG extends JPanel{
         refDescriptor.setFont(GLOBALFONT.deriveFont(15f));
         refDescriptor.setBackground(BGCOLOR);
         refDescriptor.setForeground(FONTCOLOR);
-        elementContainer.add(refDescriptor, c);
+        add(refDescriptor, c);
         
         //The Reference Body Selector
         c = new GridBagConstraints();
@@ -169,7 +168,7 @@ public class BG extends JPanel{
         });
         referenceBox.setBackground(BGCOLOR);
         referenceBox.setForeground(FONTCOLOR);
-        elementContainer.add(referenceBox, c);
+        add(referenceBox, c);
         
         //The First Body Selector Label
         c = new GridBagConstraints();
@@ -180,7 +179,7 @@ public class BG extends JPanel{
         startDescriptor.setFont(GLOBALFONT.deriveFont(15f));
         startDescriptor.setBackground(BGCOLOR);
         startDescriptor.setForeground(Color.RED);
-        elementContainer.add(startDescriptor, c);
+        add(startDescriptor, c);
         
         //The First Body Selector
         c = new GridBagConstraints();
@@ -201,7 +200,7 @@ public class BG extends JPanel{
         });
         firstBodyBox.setBackground(BGCOLOR);
         firstBodyBox.setForeground(Color.RED);
-        elementContainer.add(firstBodyBox, c);
+        add(firstBodyBox, c);
         
         //The Second Body Selector Label
         c = new GridBagConstraints();
@@ -212,7 +211,7 @@ public class BG extends JPanel{
         endDescriptor.setFont(GLOBALFONT.deriveFont(15f));
         endDescriptor.setBackground(BGCOLOR);
         endDescriptor.setForeground(Color.CYAN);
-        elementContainer.add(endDescriptor, c);
+        add(endDescriptor, c);
         
         //The Second Body Selector
         c = new GridBagConstraints();
@@ -233,7 +232,7 @@ public class BG extends JPanel{
         });
         secondBodyBox.setBackground(BGCOLOR);
         secondBodyBox.setForeground(Color.CYAN);
-        elementContainer.add(secondBodyBox, c);
+        add(secondBodyBox, c);
         
         //the orbital display
         dp = new OrbitVisualizer();
@@ -244,7 +243,7 @@ public class BG extends JPanel{
         dp.init(new Dimension(480,480), tBody1, tBody2);
         dp.setBackground(BGCOLOR);
         dp.setForeground(FONTCOLOR);
-        elementContainer.add(dp,c);
+        add(dp,c);
         
         //The Output
         output = new Output();
@@ -253,27 +252,30 @@ public class BG extends JPanel{
         c.gridx = 2;
         c.gridy = 4;
         c.weighty = 0.0;
+        c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
-        elementContainer.add(output, c);
+        add(output, c);
         
-        //The Antenna selection stuff nsy
+        //The Antenna selection stuff
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 3;
         c.gridheight = 2;
+        c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
         av1 = new AntennaVisualizer();
         av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f),BGCOLOR,FONTCOLOR, f, this);
-        elementContainer.add(av1,c);
+        add(av1,c);
         
         c = new GridBagConstraints();
         c.gridx = 4;
         c.gridy = 3;
         c.gridheight = 2;
         c.anchor = GridBagConstraints.PAGE_END;
+        c.insets = new Insets(0,0,30,0);
         av2 = new AntennaVisualizer();
         av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f),BGCOLOR,FONTCOLOR, f, this);
-        elementContainer.add(av2,c);
+        add(av2,c);
 
         //Custom orbit stuff
         c = new GridBagConstraints();
@@ -281,14 +283,14 @@ public class BG extends JPanel{
         c.gridy = 3;
         oc1 = new OrbitCustomiser();
         oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, Color.RED, this);
-        elementContainer.add(oc1,c);
+        add(oc1,c);
         
         c = new GridBagConstraints();
         c.gridx = 3;
         c.gridy = 3;
         oc2 = new OrbitCustomiser();
         oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, Color.CYAN, this);
-        elementContainer.add(oc2, c);
+        add(oc2, c);
         
         //buttonsforactivating customorbits
         c = new GridBagConstraints();
@@ -308,7 +310,7 @@ public class BG extends JPanel{
         oca1.setBackground(BGCOLOR);
         oca1.setForeground(FONTCOLOR);
         oca1.setFont(GLOBALFONT.deriveFont(Font.PLAIN, 16f));
-        elementContainer.add(oca1,c);
+        add(oca1,c);
         
         c = new GridBagConstraints();
         c.gridx = 3;
@@ -328,9 +330,8 @@ public class BG extends JPanel{
         oca2.setBackground(BGCOLOR);
         oca2.setForeground(FONTCOLOR);
         oca2.setFont(GLOBALFONT.deriveFont(Font.PLAIN, 16f));
-        elementContainer.add(oca2,c);
-        
-        add(elementContainer);
+        add(oca2,c);
+
         updateLabels();
     }
     

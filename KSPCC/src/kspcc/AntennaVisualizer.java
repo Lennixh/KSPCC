@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class AntennaVisualizer extends JPanel{
     
     private JFrame f;
-    
     private BG bgo;
-    
     private ArrayList<Antenna> antennae;
     private ArrayList<String> selectorStrings;
     ArrayList<String> units;
@@ -17,8 +15,6 @@ public class AntennaVisualizer extends JPanel{
     private ArrayList<Antenna> vesselAntennae;
     
     JPanel displayer;
-    JPanel rightHandMan;
-    JPanel leftHandMan;
     
     private JComboBox antennaSelectorBox;
     
@@ -67,28 +63,27 @@ public class AntennaVisualizer extends JPanel{
         antennaSelectorBox.addActionListener(e -> {
             if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2) {
                 vesselAntennae.add(antennae.get(antennaSelectorBox.getSelectedIndex()));
-                antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
-                JLabel antennaLabel = new JLabel(vesselAntennae.get(vesselAntennae.size()-1).getName());
-                antennaLabel.setFont(font);
-                antennaLabel.setBackground(bg);
-                antennaLabel.setForeground(fg);
-                antennaLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-                leftHandMan.add(antennaLabel);
+                JButton anntennaHandler = new JButton(vesselAntennae.get(vesselAntennae.size()-1).getName());
+                anntennaHandler.setFont(font);
+                anntennaHandler.setBackground(bg);
+                anntennaHandler.setForeground(fg);
                 
-                JButton antennaRemover = new JButton("X");
-                antennaRemover.setFont(font);
-                antennaRemover.setBackground(bg);
-                antennaRemover.setForeground(Color.RED);
-                antennaRemover.addActionListener(ex ->{
-                    int ind = rightHandMan.getComponentCount()-1;
+                anntennaHandler.addActionListener(ex ->{
+                    int ind = displayer.getComponentCount()-1;
                     vesselAntennae.remove(ind);
-                    leftHandMan.remove(antennaLabel);
-                    rightHandMan.remove(antennaRemover);
-                    f.pack();
+                    displayer.remove(anntennaHandler);
+                    revalidate();
+                    f.repaint();
                     bgo.updateLabels();
                 });
-                rightHandMan.add(antennaRemover);
-                f.pack();
+                
+                revalidate();
+                f.repaint();
+                GridBagConstraints c = new GridBagConstraints();
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridy = displayer.getComponentCount();
+                displayer.add(anntennaHandler, c);
+                
                 bgo.updateLabels();
             }
             if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 ) {
@@ -104,20 +99,13 @@ public class AntennaVisualizer extends JPanel{
                     antennaSelectorBox.addItem(s);
                 }
             }
+            antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         });
         
         GridBagConstraints c = new GridBagConstraints();
         displayer = new JPanel();
-        rightHandMan = new JPanel();
-        leftHandMan = new JPanel();
-        displayer.setLayout(new BoxLayout(displayer, BoxLayout.X_AXIS));
-        rightHandMan.setLayout(new BoxLayout(rightHandMan, BoxLayout.Y_AXIS));
-        leftHandMan.setLayout(new BoxLayout(leftHandMan, BoxLayout.Y_AXIS));
+        displayer.setLayout(new GridBagLayout());
         displayer.setBackground(bg);
-        rightHandMan.setBackground(bg);
-        leftHandMan.setBackground(bg);
-        displayer.add(leftHandMan);
-        displayer.add(rightHandMan);
         add(displayer, c);
         c.gridy = 1;
         add(antennaSelectorBox, c);

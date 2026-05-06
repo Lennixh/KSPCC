@@ -6,7 +6,6 @@ import javax.swing.*;
 public class KSPCC {
     
     private JFrame f;
-
     public void init(){
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         f = new JFrame("KSPCC");
@@ -16,8 +15,9 @@ public class KSPCC {
         BG bg = new BG();
         bg.init(f);
         f.add(bg, BorderLayout.CENTER);
+
         f.pack();
-        
+  
         f.setVisible(true);
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
