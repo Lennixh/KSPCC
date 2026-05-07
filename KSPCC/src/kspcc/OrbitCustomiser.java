@@ -55,7 +55,7 @@ public class OrbitCustomiser extends JPanel{
         SMAnumIn.setColumns(10);
         SMAnumIn.setSelectionColor(fg);
         SMAnumIn.setCaretColor(fg);
-        SMAnumIn.addPropertyChangeListener(e -> {
+        SMAnumIn.addActionListener(e -> {
             body.setSMA(Double.parseDouble(SMAnumIn.getValue()+"")*Math.pow(1000, 1-unit));
             master.updateLabels();
             //System.out.println(body.getSMA() + "Gm");
@@ -83,7 +83,7 @@ public class OrbitCustomiser extends JPanel{
         EccentricityIn.setColumns(10);
         EccentricityIn.setSelectionColor(fg);
         EccentricityIn.setCaretColor(fg);
-        EccentricityIn.addPropertyChangeListener(e -> {
+        EccentricityIn.addActionListener(e -> {
             EccentricityIn.setValue(Math.min(Double.parseDouble(EccentricityIn.getValue()+""), 1d));
             body.setE(Float.parseFloat(EccentricityIn.getValue()+""));
             master.updateLabels();
@@ -286,5 +286,11 @@ public class OrbitCustomiser extends JPanel{
         }
         
         return getBodyFromFile(sc, b);
+    }
+    
+    public void setFontColor(Color c){
+        for (int i = 0; i < getComponentCount(); i++) {
+            getComponent(i).setForeground(c);
+        }
     }
 }

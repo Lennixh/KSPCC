@@ -48,7 +48,7 @@ public class OrbitVisualizer extends JPanel {
         }
     }
     
-    public void addOrbit(Body b, Color color){
+    public void addOrbit(Body b){
         if (1/(2*b.getSMA()) < scale) {
             scale = 1/(2*b.getSMA());
             orbitShapes.clear();

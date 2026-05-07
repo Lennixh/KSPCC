@@ -17,7 +17,6 @@ public class BG extends JPanel{
     private final ArrayList<String> units = new ArrayList<>(); 
     private int unit = 1;
     
-    
     private JComboBox referenceBox;
     private JComboBox firstBodyBox;
     private JComboBox secondBodyBox;
@@ -28,14 +27,18 @@ public class BG extends JPanel{
     private AntennaVisualizer av2;
     
     private OrbitVisualizer dp;
-    public OrbitVisualizer mp;
+        
+    private OrbitCustomiser oc1;
+    private OrbitCustomiser oc2;
     
-    private ArrayList<Body> standardBodies = new ArrayList<>();
-    private ArrayList<String> standardNames = new ArrayList<>();
-    private ArrayList<Body> progenitorialBodies = new ArrayList<>();
-    private ArrayList<String> progenitorialNames = new ArrayList<>();
-    private ArrayList<Body> availableBodies = new ArrayList<>();
-    private ArrayList<String> availableNames = new ArrayList<>();
+    private JLabel firstBodyLabel;
+    private JLabel secondBodyLabel;
+    
+    private final ArrayList<Body> standardBodies = new ArrayList<>();
+    private final ArrayList<Body> progenitorialBodies = new ArrayList<>();
+    private final ArrayList<String> progenitorialNames = new ArrayList<>();
+    private final ArrayList<Body> availableBodies = new ArrayList<>();
+    private final ArrayList<String> availableNames = new ArrayList<>();
     
     private final Body    Sun = new Body("   Sun", 0.0000000000, 0.000f, 0.000, 0.000, 0.000, null);
     private final Body   Moho = new Body("  Moho", 5.2631383040, 0.200f, 7.000, 15.00, 70.00, Sun);
@@ -62,11 +65,10 @@ public class BG extends JPanel{
     public boolean useCustom1 = false;
     public boolean useCustom2 = false;
     
-    OrbitCustomiser oc1;
-    OrbitCustomiser oc2;
-    
     public Color color1 = Color.RED;
     public Color color2 = Color.CYAN;
+    
+    public boolean configOpen = false;
     
     public void init(JFrame f){
         
@@ -96,7 +98,6 @@ public class BG extends JPanel{
         standardBodies.add(Eeloo);
         
         for (Body b : standardBodies){
-            standardNames.add(b.getName());
             if (b.hasChildren()) {
                 progenitorialBodies.add(b);
                 progenitorialNames.add(b.getName());
@@ -178,11 +179,11 @@ public class BG extends JPanel{
         c.gridx = 0;
         c.gridy = 1;
         c.anchor = GridBagConstraints.PAGE_END;
-        JLabel startDescriptor = new JLabel("First body: ");
-        startDescriptor.setFont(GLOBALFONT.deriveFont(15f));
-        startDescriptor.setBackground(BGCOLOR);
-        startDescriptor.setForeground(color1);
-        add(startDescriptor, c);
+        firstBodyLabel = new JLabel("First body: ");
+        firstBodyLabel.setFont(GLOBALFONT.deriveFont(15f));
+        firstBodyLabel.setBackground(BGCOLOR);
+        firstBodyLabel.setForeground(color1);
+        add(firstBodyLabel, c);
         
         //The First Body Selector
         c = new GridBagConstraints();
@@ -210,11 +211,11 @@ public class BG extends JPanel{
         c.gridx = 4;
         c.gridy = 1;
         c.anchor = GridBagConstraints.PAGE_END;
-        JLabel endDescriptor = new JLabel("Second body: ");
-        endDescriptor.setFont(GLOBALFONT.deriveFont(15f));
-        endDescriptor.setBackground(BGCOLOR);
-        endDescriptor.setForeground(color2);
-        add(endDescriptor, c);
+        secondBodyLabel = new JLabel("Second body: ");
+        secondBodyLabel.setFont(GLOBALFONT.deriveFont(15f));
+        secondBodyLabel.setBackground(BGCOLOR);
+        secondBodyLabel.setForeground(color2);
+        add(secondBodyLabel, c);
         
         //The Second Body Selector
         c = new GridBagConstraints();
@@ -295,6 +296,28 @@ public class BG extends JPanel{
         oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, color2, this, false);
         add(oc2, c);
 
+        c = new GridBagConstraints();
+        c.gridx = 4;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        JButton configButton = new JButton();
+        configButton.setBackground(BGCOLOR);
+        configButton.setForeground(FONTCOLOR);
+        configButton.setPreferredSize(new Dimension(32,32));
+        configButton.setBorderPainted(false);
+        ImageIcon configIcon = new ImageIcon("resources/configIconWhiteSmall.png");
+        configButton.setIcon(configIcon);
+        ConfigWindow cfgWindow = new ConfigWindow(BGCOLOR, FONTCOLOR, this, GLOBALFONT.deriveFont(Font.PLAIN, 16f));
+        configButton.addActionListener(e->{
+            configOpen = !configOpen;
+            if (configOpen) {
+                cfgWindow.open();
+            } else {
+                cfgWindow.close();
+            }
+        });
+        
+        add(configButton, c);
         updateLabels();
     }
     
@@ -303,18 +326,29 @@ public class BG extends JPanel{
         dp.scale = 1;
         dp.orbits.clear();
         dp.orbitShapes.clear();
+        dp.orbitColors.clear();
+        dp.orbitColors.add(color1);
+        dp.orbitColors.add(color2);
         if (!useCustom1) {
-            dp.addOrbit(tBody1, color1);
+            dp.addOrbit(tBody1);
         } else {
-            dp.addOrbit(oc1.body, color1);
+            dp.addOrbit(oc1.body);
         }
         if (!useCustom2) {
-            dp.addOrbit(tBody2, color2);
+            dp.addOrbit(tBody2);
         } else {
-            dp.addOrbit(oc2.body, color2);
+            dp.addOrbit(oc2.body);
         }
-        
         dp.repaint();
+        
+        oc1.setFontColor(color1);
+        firstBodyLabel.setForeground(color1);
+        firstBodyBox.setForeground(color1);
+        
+        oc2.setFontColor(color2);
+        secondBodyLabel.setForeground(color2);
+        secondBodyBox.setForeground(color2);
+       
         double[] dists = new double[2];
         if (rBody == tBody1 && !useCustom1) {
             dists[0] = tBody2.getPE();
