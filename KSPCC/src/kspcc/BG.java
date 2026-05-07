@@ -305,7 +305,8 @@ public class BG extends JPanel{
         configButton.setForeground(FONTCOLOR);
         configButton.setPreferredSize(new Dimension(32,32));
         configButton.setBorderPainted(false);
-        ImageIcon configIcon = new ImageIcon("resources/configIconWhiteSmall.png");
+        java.net.URL imageURL = KSPCC.class.getResource("resources/configIconWhiteSmall.png");
+        ImageIcon configIcon = new ImageIcon(imageURL);
         configButton.setIcon(configIcon);
         ConfigWindow cfgWindow = new ConfigWindow(BGCOLOR, FONTCOLOR, this, GLOBALFONT.deriveFont(Font.PLAIN, 16f));
         configButton.addActionListener(e->{
