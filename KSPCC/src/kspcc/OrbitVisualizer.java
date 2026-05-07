@@ -17,7 +17,7 @@ public class OrbitVisualizer extends JPanel {
     public ArrayList<Polygon> orbitShapes;
     public ArrayList<Color> orbitColors;
     
-    public void init(Dimension d, Body b1, Body b2){
+    public void init(Dimension d, Body b1, Body b2, BG master){
         this.d = d;
         this.setPreferredSize(d);
         this.scale = 1;
@@ -26,8 +26,8 @@ public class OrbitVisualizer extends JPanel {
         orbits.add(b2);
         orbitShapes = new ArrayList<>();
         orbitColors = new ArrayList<>();
-        orbitColors.add(Color.RED);
-        orbitColors.add(Color.CYAN);
+        orbitColors.add(master.color1);
+        orbitColors.add(master.color2);
         units = new ArrayList<>();
         units.add("Tm");
         units.add("Gm");
@@ -51,14 +51,6 @@ public class OrbitVisualizer extends JPanel {
     public void addOrbit(Body b, Color color){
         if (1/(2*b.getSMA()) < scale) {
             scale = 1/(2*b.getSMA());
-            orbitShapes.clear();
-            for (int i = 0; i < orbits.size(); i++) {
-                Body tOrbit = orbits.get(i);
-                generateEllipse(tOrbit.getSMA(),tOrbit.getSMB(),Math.toRadians(tOrbit.getAoP()),Math.toRadians(tOrbit.getLoA()), Math.toRadians(tOrbit.getInc()));
-            }
-        }
-        if (b.getSMA() < scale) {
-            scale = 0.5/b.getSMA();
             orbitShapes.clear();
             for (int i = 0; i < orbits.size(); i++) {
                 Body tOrbit = orbits.get(i);
@@ -105,70 +97,7 @@ public class OrbitVisualizer extends JPanel {
         }
         orbitShapes.add(pNew);
     }
-    /*public void askForOrbit(){
-        scale = 1;
-        orbits.clear();
-        orbitShapes.clear();
-
-        int unit = units.indexOf(fetchUserUnit("first", "Gm"));
-        double cSMA = Double.parseDouble(fetchUserDoubleAsString("Input semimajoraxis of first orbit",1))*Math.pow(1000, 1-unit);
-        float cE = Float.parseFloat(fetchUserFloatAsString("Input eccentricity of first orbit",0));
-        double cInc = Double.parseDouble(fetchUserDoubleAsString("Input inclination of first orbit",0));
-        double cLoA = Double.parseDouble(fetchUserDoubleAsString("Input longitude of ascending node of first orbit",0));
-        double cAoP = Double.parseDouble(fetchUserDoubleAsString("Input argument of periapsis of first orbit",0));
-        addOrbit(new Body("RedOrbit", cSMA, cE, cInc, cAoP, cLoA, null), orbitColors.get(0));
-        unit = units.indexOf(fetchUserUnit("second", "Gm"));
-        cSMA = Double.parseDouble(fetchUserDoubleAsString("Input semimajoraxis of second orbit",1))*Math.pow(1000, 1-unit);
-        cE = Float.parseFloat(fetchUserFloatAsString("Input eccentricity of second orbit",0));
-        cInc = Double.parseDouble(fetchUserDoubleAsString("Input inclination of second orbit",0));
-        cLoA = Double.parseDouble(fetchUserDoubleAsString("Input longitude of ascending node of second orbit",0));
-        cAoP = Double.parseDouble(fetchUserDoubleAsString("Input argument of periapsis of second orbit",0));
-        addOrbit(new Body("BlueOrbit", cSMA, cE, cInc, cAoP, cLoA, null), orbitColors.get(1));
-        getDists();
-    }
-    private String fetchUserUnit(String number, String dVal){
-        String s = (String) JOptionPane.showInputDialog("Input unit of " + number + " body\n(Options: Tm, Gm, Mm, Km, m)", "");
-        if (!units.contains(s)) {
-            s = dVal;
-        }
-        return s;
-    }
     
-    private String fetchUserFloatAsString(String message, float dNum){
-        String s = (String) JOptionPane.showInputDialog(message, "");
-        if (s !=  null) {
-            try {
-            if (s.isBlank()) {
-                s = "" + dNum;
-            }
-            Float.parseFloat(s);
-            } catch (NumberFormatException ex) {
-                s = fetchUserFloatAsString(message, dNum);
-            }
-        } else {
-            s = ""+dNum;
-        }
-        
-        return s;
-    }
-    
-    private String fetchUserDoubleAsString(String message, double dNum){
-        String s = (String) JOptionPane.showInputDialog(message, "");
-        if (s != null) {
-            try {
-            if (s.isBlank()) {
-                s = "" + dNum;
-            }
-            Double.parseDouble(s);
-            } catch (NumberFormatException ex) {
-                s = fetchUserDoubleAsString(message, dNum);
-            }
-        } else {
-            s = ""+dNum;
-        }
-        
-        return s;
-    }*/
     public double[] getDists(){ 
         
         final double a0 = orbits.get(0).getSMA();

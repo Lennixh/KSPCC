@@ -59,11 +59,14 @@ public class BG extends JPanel{
     private Body tBody1 = Moho;
     private Body tBody2 = Eve;
     
-    private boolean useCustom1 = false;
-    private boolean useCustom2 = false;
+    public boolean useCustom1 = false;
+    public boolean useCustom2 = false;
     
     OrbitCustomiser oc1;
     OrbitCustomiser oc2;
+    
+    public Color color1 = Color.RED;
+    public Color color2 = Color.CYAN;
     
     public void init(JFrame f){
         
@@ -178,7 +181,7 @@ public class BG extends JPanel{
         JLabel startDescriptor = new JLabel("First body: ");
         startDescriptor.setFont(GLOBALFONT.deriveFont(15f));
         startDescriptor.setBackground(BGCOLOR);
-        startDescriptor.setForeground(Color.RED);
+        startDescriptor.setForeground(color1);
         add(startDescriptor, c);
         
         //The First Body Selector
@@ -199,7 +202,7 @@ public class BG extends JPanel{
             updateLabels();
         });
         firstBodyBox.setBackground(BGCOLOR);
-        firstBodyBox.setForeground(Color.RED);
+        firstBodyBox.setForeground(color1);
         add(firstBodyBox, c);
         
         //The Second Body Selector Label
@@ -210,7 +213,7 @@ public class BG extends JPanel{
         JLabel endDescriptor = new JLabel("Second body: ");
         endDescriptor.setFont(GLOBALFONT.deriveFont(15f));
         endDescriptor.setBackground(BGCOLOR);
-        endDescriptor.setForeground(Color.CYAN);
+        endDescriptor.setForeground(color2);
         add(endDescriptor, c);
         
         //The Second Body Selector
@@ -231,7 +234,7 @@ public class BG extends JPanel{
             updateLabels();
         });
         secondBodyBox.setBackground(BGCOLOR);
-        secondBodyBox.setForeground(Color.CYAN);
+        secondBodyBox.setForeground(color2);
         add(secondBodyBox, c);
         
         //the orbital display
@@ -240,7 +243,7 @@ public class BG extends JPanel{
         c.gridx = 2;
         c.gridy = 3;
         c.weighty = 1f;
-        dp.init(new Dimension(480,480), tBody1, tBody2);
+        dp.init(new Dimension(480,480), tBody1, tBody2, this);
         dp.setBackground(BGCOLOR);
         dp.setForeground(FONTCOLOR);
         add(dp,c);
@@ -282,55 +285,15 @@ public class BG extends JPanel{
         c.gridx = 1;
         c.gridy = 3;
         oc1 = new OrbitCustomiser();
-        oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, Color.RED, this);
+        oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, color1, this, true);
         add(oc1,c);
         
         c = new GridBagConstraints();
         c.gridx = 3;
         c.gridy = 3;
         oc2 = new OrbitCustomiser();
-        oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, Color.CYAN, this);
+        oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, color2, this, false);
         add(oc2, c);
-        
-        //buttonsforactivating customorbits
-        c = new GridBagConstraints();
-        c.gridx = 1;
-        c.gridy = 3;
-        c.anchor = GridBagConstraints.PAGE_START;
-        JButton oca1 = new JButton("Using red vanilla orbit");
-        oca1.addActionListener(e->{
-            useCustom1 = !useCustom1;
-            if (useCustom1) {
-                oca1.setText("Using red custom orbit");
-            } else {
-                oca1.setText("Using red vanilla orbit");
-            }
-            updateLabels();
-        });
-        oca1.setBackground(BGCOLOR);
-        oca1.setForeground(FONTCOLOR);
-        oca1.setFont(GLOBALFONT.deriveFont(Font.PLAIN, 16f));
-        add(oca1,c);
-        
-        c = new GridBagConstraints();
-        c.gridx = 3;
-        c.gridy = 3;
-        c.anchor = GridBagConstraints.PAGE_START;
-        JButton oca2 = new JButton("Using cyan vanilla orbit");
-        oca2.addActionListener(e->{
-            useCustom2 = !useCustom2;
-            if (useCustom2) {
-                oca2.setText("Using cyan custom orbit");
-            } else {
-                oca2.setText("Using cyan vanilla orbit");
-            }
-            
-            updateLabels();
-        });
-        oca2.setBackground(BGCOLOR);
-        oca2.setForeground(FONTCOLOR);
-        oca2.setFont(GLOBALFONT.deriveFont(Font.PLAIN, 16f));
-        add(oca2,c);
 
         updateLabels();
     }
@@ -341,22 +304,22 @@ public class BG extends JPanel{
         dp.orbits.clear();
         dp.orbitShapes.clear();
         if (!useCustom1) {
-            dp.addOrbit(tBody1, Color.RED);
+            dp.addOrbit(tBody1, color1);
         } else {
-            dp.addOrbit(oc1.body, Color.RED);
+            dp.addOrbit(oc1.body, color1);
         }
         if (!useCustom2) {
-            dp.addOrbit(tBody2, Color.CYAN);
+            dp.addOrbit(tBody2, color2);
         } else {
-            dp.addOrbit(oc2.body, Color.CYAN);
+            dp.addOrbit(oc2.body, color2);
         }
         
         dp.repaint();
         double[] dists = new double[2];
-        if (rBody == tBody1) {
+        if (rBody == tBody1 && !useCustom1) {
             dists[0] = tBody2.getPE();
             dists[1] = tBody2.getAP();
-        } else if (rBody == tBody2){
+        } else if (rBody == tBody2 && !useCustom2){
             dists[0] = tBody1.getPE();
             dists[1] = tBody1.getAP();
         } else {

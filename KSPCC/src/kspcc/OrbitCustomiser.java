@@ -17,7 +17,7 @@ public class OrbitCustomiser extends JPanel{
     private ArrayList<String> units;
     private int unit = 1;
     
-    public void init(Font font, Color bg, Color fg, BG master){
+    public void init(Font font, Color bg, Color fg, BG master, boolean first){
         
         body = new Body("b", 1, 0, 0, 0, 0, null);
     
@@ -172,6 +172,33 @@ public class OrbitCustomiser extends JPanel{
         fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(new CfgFilter());
         
+        JButton activator = new JButton("");
+        if (first) {
+            activator.setText("Using first vanilla orbit");
+        } else {
+            activator.setText("Using second vanilla orbit");
+        }
+        activator.addActionListener(e ->{
+            if (first) {
+                master.useCustom1 = !master.useCustom1;
+                if (master.useCustom1) {
+                    activator.setText("Using first custom orbit");
+                } else {
+                    activator.setText("Using first vanilla orbit");
+                }
+            } else {
+                master.useCustom2 = !master.useCustom2;
+                if (master.useCustom2) {
+                    activator.setText("Using second custom orbit");
+                } else {
+                    activator.setText("Using second vanilla orbit");
+                }
+            }
+            
+            master.updateLabels();
+        });
+
+        
         KopernicusConfigSelctor.addActionListener(e -> {
             if (fc.showOpenDialog(master) == JFileChooser.APPROVE_OPTION) {
                 File cfg = fc.getSelectedFile();
@@ -181,6 +208,13 @@ public class OrbitCustomiser extends JPanel{
                         s = fileReader.nextLine();
                         if (s.contains("Orbit")) {
                             body = getBodyFromFile(fileReader, new Body());
+                            if (first) {
+                                master.useCustom1 = true;
+                                activator.setText("Using first custom orbit");
+                            } else {
+                                master.useCustom2 = true;
+                                activator.setText("Using second custom orbit");
+                            }
                             SMAnumIn.setValue(body.getSMA());
                             EccentricityIn.setValue(body.getE());
                             InclinationIn.setValue(body.getInc());
@@ -193,14 +227,23 @@ public class OrbitCustomiser extends JPanel{
                             break;
                         }
                     }
+                    
+                    
+                    //System.out.println(indexOfComponent(KopernicusConfigSelctor.getParent().getParent().getComponents(), KopernicusConfigSelctor.getParent()) + "");
                 } catch (FileNotFoundException ex) {
                     System.out.println("Oopsie woopsie the file disappeared");
                 }
-
             }
-            
         });
         add(KopernicusConfigSelctor,c);
+        
+        c.gridy = 6;
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.insets = new Insets(10,0,0,0);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        add(activator, c);
+        
         
         
         for (int i = 0; i < getComponentCount(); i++) {
@@ -210,6 +253,7 @@ public class OrbitCustomiser extends JPanel{
         }
     }
 
+    
     private Body getBodyFromFile(Scanner sc, Body b) {
         String s = sc.nextLine();
         if (s.contains("}")) {
