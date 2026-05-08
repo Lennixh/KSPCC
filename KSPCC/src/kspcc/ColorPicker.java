@@ -95,6 +95,13 @@ public class ColorPicker extends JPanel{
         }
     }
     
+    public void updateColorMode(){
+        for (int i = 0; i < getComponentCount(); i++) {
+            getComponent(i).setBackground(getParent().getBackground());
+            getComponent(i).setForeground(getParent().getForeground());
+        }
+    }
+    
     private void updateColors(BG master, String place){
         if (place.equals("First")) {
                 master.color1 = color;
@@ -102,6 +109,5 @@ public class ColorPicker extends JPanel{
                 master.color2 = color;
             }
             master.updateLabels();
-            System.out.println(master.color2);
     }
 }

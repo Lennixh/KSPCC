@@ -13,11 +13,15 @@ import javax.swing.*;
 
 public class OrbitCustomiser extends JPanel{
     
+    private BG master;
+    
     public Body body;
     private ArrayList<String> units;
     private int unit = 1;
     
-    public void init(Font font, Color bg, Color fg, BG master, boolean first){
+    public void init(Font font, Color fg, BG master, boolean first){
+        
+        this.master = master;
         
         body = new Body("b", 1, 0, 0, 0, 0, null);
     
@@ -32,7 +36,7 @@ public class OrbitCustomiser extends JPanel{
         floatFormat.setMaximumFractionDigits(10);
         floatFormat.setMaximumIntegerDigits(1);
         
-        setBackground(bg);
+        setBackground(master.BGCOLOR);
         setForeground(fg);
         setLayout(new GridBagLayout());
         
@@ -247,12 +251,17 @@ public class OrbitCustomiser extends JPanel{
         
         
         for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(bg);
+            getComponent(i).setBackground(master.BGCOLOR);
             getComponent(i).setForeground(fg);
             getComponent(i).setFont(font);
         }
     }
 
+    public void updateColors() {
+        for (int i = 0; i < getComponentCount(); i++) {
+            getComponent(i).setBackground(master.BGCOLOR);
+        }
+    }
     
     private Body getBodyFromFile(Scanner sc, Body b) {
         String s = sc.nextLine();

@@ -39,7 +39,7 @@ public class OrbitVisualizer extends JPanel {
     public void paint(Graphics g) {
         super.paintComponent(g);       
 
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(Color.GRAY);
         g.drawLine(d.width/2, 0, d.width/2, d.height);
         g.drawLine(0,d.height/2, d.width, d.height/2);
         for (int i = 0; i < orbitShapes.size(); i++) {

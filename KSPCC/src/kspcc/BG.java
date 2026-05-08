@@ -11,8 +11,8 @@ public class BG extends JPanel{
     private JFrame f;
     
     private final Font GLOBALFONT = new Font("Sans Serif", Font.PLAIN, 10);
-    private final Color BGCOLOR = Color.BLACK;
-    private final Color FONTCOLOR = Color.WHITE;
+    public Color BGCOLOR = Color.BLACK;
+    public Color FONTCOLOR = Color.WHITE;
     
     private final ArrayList<String> units = new ArrayList<>(); 
     private int unit = 1;
@@ -30,6 +30,8 @@ public class BG extends JPanel{
         
     private OrbitCustomiser oc1;
     private OrbitCustomiser oc2;
+    
+    private ConfigWindow cfgWindow;
     
     private JLabel firstBodyLabel;
     private JLabel secondBodyLabel;
@@ -69,6 +71,7 @@ public class BG extends JPanel{
     public Color color2 = Color.CYAN;
     
     public boolean configOpen = false;
+    public boolean darkMode = true;
     
     public void init(JFrame f){
         
@@ -268,7 +271,7 @@ public class BG extends JPanel{
         c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
         av1 = new AntennaVisualizer();
-        av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f),BGCOLOR,FONTCOLOR, f, this);
+        av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, this);
         add(av1,c);
         
         c = new GridBagConstraints();
@@ -278,7 +281,7 @@ public class BG extends JPanel{
         c.anchor = GridBagConstraints.PAGE_END;
         c.insets = new Insets(0,0,30,0);
         av2 = new AntennaVisualizer();
-        av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f),BGCOLOR,FONTCOLOR, f, this);
+        av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, this);
         add(av2,c);
 
         //Custom orbit stuff
@@ -286,14 +289,14 @@ public class BG extends JPanel{
         c.gridx = 1;
         c.gridy = 3;
         oc1 = new OrbitCustomiser();
-        oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, color1, this, true);
+        oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color1, this, true);
         add(oc1,c);
         
         c = new GridBagConstraints();
         c.gridx = 3;
         c.gridy = 3;
         oc2 = new OrbitCustomiser();
-        oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), BGCOLOR, color2, this, false);
+        oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color2, this, false);
         add(oc2, c);
 
         c = new GridBagConstraints();
@@ -305,10 +308,12 @@ public class BG extends JPanel{
         configButton.setForeground(FONTCOLOR);
         configButton.setPreferredSize(new Dimension(32,32));
         configButton.setBorderPainted(false);
-        java.net.URL imageURL = KSPCC.class.getResource("resources/configIconWhiteSmall.png");
-        ImageIcon configIcon = new ImageIcon(imageURL);
-        configButton.setIcon(configIcon);
-        ConfigWindow cfgWindow = new ConfigWindow(BGCOLOR, FONTCOLOR, this, GLOBALFONT.deriveFont(Font.PLAIN, 16f));
+        java.net.URL configWhiteURL = KSPCC.class.getResource("resources/configIconWhite.png");
+        java.net.URL configBlackURL = KSPCC.class.getResource("resources/configIconBlack.png");
+        ImageIcon configWhite = new ImageIcon(configWhiteURL);
+        ImageIcon configBlack = new ImageIcon(configBlackURL);
+        configButton.setIcon(configWhite);
+        cfgWindow = new ConfigWindow(BGCOLOR, FONTCOLOR, this, GLOBALFONT.deriveFont(Font.PLAIN, 16f), configWhite.getImage());
         configButton.addActionListener(e->{
             configOpen = !configOpen;
             if (configOpen) {
@@ -319,6 +324,34 @@ public class BG extends JPanel{
         });
         
         add(configButton, c);
+        
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        JButton lightDarkButton = new JButton();
+        lightDarkButton.setBackground(BGCOLOR);
+        lightDarkButton.setForeground(FONTCOLOR);
+        lightDarkButton.setPreferredSize(new Dimension(32,32));
+        lightDarkButton.setBorderPainted(false);
+        java.net.URL moonImageURL = KSPCC.class.getResource("resources/moonSmall.png");
+        java.net.URL sunImageURL = KSPCC.class.getResource("resources/sunSmall.png");
+        ImageIcon moonIcon = new ImageIcon(moonImageURL);
+        ImageIcon sunIcon = new ImageIcon(sunImageURL);
+        lightDarkButton.setIcon(moonIcon);
+        lightDarkButton.addActionListener(e->{
+            darkMode = !darkMode;
+            if (darkMode) {
+                lightDarkButton.setIcon(moonIcon);
+                configButton.setIcon(configWhite);
+            } else {
+                lightDarkButton.setIcon(sunIcon);
+                configButton.setIcon(configBlack);
+            }
+            updateColors();
+        });
+        add(lightDarkButton, c);
+        
         updateLabels();
     }
     
@@ -389,6 +422,27 @@ public class BG extends JPanel{
         output.getLabel(4).setText("Signal strength at maximum distance: " + roundToDigits(maxDistStrength*100,2) + "%");
         
         
+    }
+    
+    public void updateColors(){
+        Color temp = BGCOLOR;
+        BGCOLOR = FONTCOLOR;
+        FONTCOLOR = temp;
+        setBackground(BGCOLOR);
+        setForeground(FONTCOLOR);
+        for (int i = 0; i < getComponentCount(); i++) {
+            getComponent(i).setBackground(BGCOLOR);
+            getComponent(i).setForeground(FONTCOLOR);
+        }
+        firstBodyLabel.setForeground(color1);
+        firstBodyBox.setForeground(color1);
+        secondBodyLabel.setForeground(color2);
+        secondBodyBox.setForeground(color2);
+        av1.updateColors();
+        av2.updateColors();
+        oc1.updateColors();
+        oc2.updateColors();
+        cfgWindow.updateColors();
     }
     
     //value in GM

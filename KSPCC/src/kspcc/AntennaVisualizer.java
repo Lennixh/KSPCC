@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class AntennaVisualizer extends JPanel{
     
     private JFrame f;
-    private BG bgo;
+    private BG master;
     private ArrayList<Antenna> antennae;
     private ArrayList<String> selectorStrings;
     ArrayList<String> units;
@@ -18,14 +18,14 @@ public class AntennaVisualizer extends JPanel{
     
     private JComboBox antennaSelectorBox;
     
-    public void init(Font font, Color bg, Color fg, JFrame f, BG bgo){
+    public void init(Font font, JFrame f, BG master){
         
         this.f = f;
-        this.bgo = bgo;
+        this.master = master;
         
         setLayout(new GridBagLayout());
-        setBackground(bg);
-        setForeground(fg);
+        setBackground(master.BGCOLOR);
+        setForeground(master.FONTCOLOR);
 
         units = new ArrayList<>();
         units.add("Tm");
@@ -56,8 +56,8 @@ public class AntennaVisualizer extends JPanel{
         selectorStrings.add("Select one");
         
         antennaSelectorBox = new JComboBox(selectorStrings.toArray());
-        antennaSelectorBox.setBackground(bg);
-        antennaSelectorBox.setForeground(fg);
+        antennaSelectorBox.setBackground(master.BGCOLOR);
+        antennaSelectorBox.setForeground(master.FONTCOLOR);
         antennaSelectorBox.setFont(font);
         antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         antennaSelectorBox.addActionListener(e -> {
@@ -65,8 +65,8 @@ public class AntennaVisualizer extends JPanel{
                 vesselAntennae.add(antennae.get(antennaSelectorBox.getSelectedIndex()));
                 JButton anntennaHandler = new JButton(vesselAntennae.get(vesselAntennae.size()-1).getName());
                 anntennaHandler.setFont(font);
-                anntennaHandler.setBackground(bg);
-                anntennaHandler.setForeground(fg);
+                anntennaHandler.setBackground(master.BGCOLOR);
+                anntennaHandler.setForeground(master.FONTCOLOR);
                 
                 anntennaHandler.addActionListener(ex ->{
                     int ind = displayer.getComponentCount()-1;
@@ -74,7 +74,7 @@ public class AntennaVisualizer extends JPanel{
                     displayer.remove(anntennaHandler);
                     revalidate();
                     f.repaint();
-                    bgo.updateLabels();
+                    master.updateLabels();
                 });
                 
                 revalidate();
@@ -84,7 +84,7 @@ public class AntennaVisualizer extends JPanel{
                 c.gridy = displayer.getComponentCount();
                 displayer.add(anntennaHandler, c);
                 
-                bgo.updateLabels();
+                master.updateLabels();
             }
             if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 ) {
                 String name = fetchUserAntennaName("Input name of Antenna");
@@ -105,11 +105,22 @@ public class AntennaVisualizer extends JPanel{
         GridBagConstraints c = new GridBagConstraints();
         displayer = new JPanel();
         displayer.setLayout(new GridBagLayout());
-        displayer.setBackground(bg);
+        displayer.setBackground(master.BGCOLOR);
         add(displayer, c);
         c.gridy = 1;
         add(antennaSelectorBox, c);
         
+    }
+    
+    public void updateColors() {
+        for (int i = 0; i < displayer.getComponentCount(); i++) {
+            displayer.getComponent(i).setBackground(master.BGCOLOR);
+            displayer.getComponent(i).setForeground(master.FONTCOLOR);
+        }
+        displayer.setBackground(master.BGCOLOR);
+        displayer.setForeground(master.FONTCOLOR);
+        antennaSelectorBox.setBackground(master.BGCOLOR);
+        antennaSelectorBox.setForeground(master.FONTCOLOR);
     }
     
     private String fetchUserUnit(){
