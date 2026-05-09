@@ -221,7 +221,7 @@ public class BG extends JPanel{
         
         //The Output
         output = new Output();
-        output.init(GLOBALFONT.deriveFont(Font.BOLD, 16f),BGCOLOR,FONTCOLOR);
+        output.init(this);
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 4;
@@ -485,6 +485,7 @@ public class BG extends JPanel{
         firstBodyBox.setForeground(color1);
         secondBodyLabel.setForeground(color2);
         secondBodyBox.setForeground(color2);
+        output.updateColors();
         av1.updateColors();
         av2.updateColors();
         oc1.updateColors();
