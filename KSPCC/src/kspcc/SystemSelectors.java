@@ -25,7 +25,7 @@ public class SystemSelectors extends JPanel implements ItemListener{
         c.gridy = 0;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.LINE_START;
-        JLabel optionNameLabel = new JLabel("Included Systems");
+        JLabel optionNameLabel = new JLabel("Included Systems:");
         add(optionNameLabel, c);
         
         c.gridx = 0;
@@ -48,7 +48,7 @@ public class SystemSelectors extends JPanel implements ItemListener{
         MPEButton = new JCheckBox("MPE");
         MPEButton.setSelected(false);
         MPEButton.addItemListener(this);
-        MPEButton.setToolTipText("Minor Planets Expansion, due to implementation, requires OPM");
+        MPEButton.setToolTipText("Minor Planets Expansion");
         add(MPEButton, c);
         
         c.gridy = 4;
@@ -89,6 +89,13 @@ public class SystemSelectors extends JPanel implements ItemListener{
         data[index] = which;
         master.sysCombo = String.copyValueOf(data);
         master.updateList();
+    }
+    
+    public void updateColors(){
+        for (int i = 0; i < getComponentCount(); i++) {
+            getComponent(i).setBackground(master.BGCOLOR);
+            getComponent(i).setForeground(master.FONTCOLOR);
+        }
     }
     
 }
