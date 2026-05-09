@@ -41,8 +41,11 @@ public class AntennaVisualizer extends JPanel{
         antennae.add(new Antenna("Communotron 16-S", 500, 3, 0.0f));
         antennae.add(new Antenna("HG-5 High Gain Antenna", 5, 2));
         antennae.add(new Antenna("Communotron DTS-M1", 2));
+        antennae.add(new Antenna("RA-2 Relay Antenna", 2));
         antennae.add(new Antenna("Communotron HG-55", 15));
+        antennae.add(new Antenna("RA-15 Relay Antenna", 15));
         antennae.add(new Antenna("Communotron 88-88", 100));
+        antennae.add(new Antenna("RA-100 Relay Antenna", 100));
         antennae.add(new Antenna("Level 1 TS", 2));
         antennae.add(new Antenna("Level 2 TS", 50));
         antennae.add(new Antenna("Level 3 TS", 250));
