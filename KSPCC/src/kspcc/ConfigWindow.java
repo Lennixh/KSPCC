@@ -15,6 +15,8 @@ public class ConfigWindow {
     private ColorPicker cp1;
     private ColorPicker cp2;
     
+    private SystemSelectors sysS;
+    
     private int screenWidth;
     private int screenHeight;
     
@@ -69,7 +71,7 @@ public class ConfigWindow {
         c.gridy = 3;
         c.weighty = 1;
         c.weightx = 1;
-        SystemSelectors sysS = new SystemSelectors();
+        sysS = new SystemSelectors();
         sysS.init(master);
         elementContainer.add(sysS, c);
         
@@ -91,6 +93,7 @@ public class ConfigWindow {
         elementContainer.setForeground(master.FONTCOLOR);
         cp1.updateColorMode();
         cp2.updateColorMode();
+        sysS.updateColors();
         cfgWindow.setIconImage(image);
     }
     
