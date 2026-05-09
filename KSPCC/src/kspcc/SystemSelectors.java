@@ -77,9 +77,6 @@ public class SystemSelectors extends JPanel implements ItemListener{
         } else if (source == OPMButton) {
             index = 1;
         } else if (source == MPEButton) {
-            if (!OPMButton.isSelected() && MPEButton.isSelected() == true) {
-                OPMButton.setSelected(true);
-            }
             index = 2;
         } else if (source == solButton) {
             index = 3;
