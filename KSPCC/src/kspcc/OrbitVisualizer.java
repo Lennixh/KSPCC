@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class OrbitVisualizer extends JPanel {
 
+    private BG master;
+    
     private Dimension d;
     
     public double scale;
@@ -18,6 +20,7 @@ public class OrbitVisualizer extends JPanel {
     public ArrayList<Color> orbitColors;
     
     public void init(Dimension d, Body b1, Body b2, BG master){
+        this.master = master;
         this.d = d;
         this.setPreferredSize(d);
         this.scale = 1;
@@ -37,11 +40,34 @@ public class OrbitVisualizer extends JPanel {
     }
     
     public void paint(Graphics g) {
-        super.paintComponent(g);       
+        
 
+        orbitShapes.clear();
+        orbitColors.clear();
+        orbitColors.add(master.color1);
+        orbitColors.add(master.color2);
+        
+        scale = Math.min(0.5d/(orbits.get(0).getSMA()), 0.5d/(orbits.get(1).getSMA()));
+        
+        if (orbits.get(0).getParent() == orbits.get(1)) {
+            orbits.get(1).setSMA(0);
+            scale = 0.5d/orbits.get(0).getSMA();
+        } 
+        if (orbits.get(1).getParent() == orbits.get(0)){
+            orbits.get(0).setSMA(0);
+            scale = 0.5d/orbits.get(1).getSMA();
+        }
+
+        for (Body b : orbits) {
+            generateEllipse(b.getSMA(), b.getSMB(), Math.toRadians(b.getAoP()), Math.toRadians(b.getLoA()), Math.toRadians(b.getInc()));
+        }
+        
+        super.paintComponent(g);
+        
         g.setColor(Color.GRAY);
         g.drawLine(d.width/2, 0, d.width/2, d.height);
         g.drawLine(0,d.height/2, d.width, d.height/2);
+
         for (int i = 0; i < orbitShapes.size(); i++) {
             g.setColor(orbitColors.get(i));
             g.drawPolygon(orbitShapes.get(i));
@@ -49,23 +75,14 @@ public class OrbitVisualizer extends JPanel {
     }
     
     public void addOrbit(Body b){
-        if (1/(2*b.getSMA()) < scale) {
-            scale = 1/(2*b.getSMA());
-            orbitShapes.clear();
-            for (int i = 0; i < orbits.size(); i++) {
-                Body tOrbit = orbits.get(i);
-                generateEllipse(tOrbit.getSMA(),tOrbit.getSMB(),Math.toRadians(tOrbit.getAoP()),Math.toRadians(tOrbit.getLoA()), Math.toRadians(tOrbit.getInc()));
-            }
-        }
-        generateEllipse(b.getSMA(), b.getSMB(), Math.toRadians(b.getAoP()), Math.toRadians(b.getLoA()), Math.toRadians(b.getInc()));
-        orbits.add(new Body(b.getName(), b.getSMA(), b.getE(), b.getInc(), b.getAoP(), b.getLoA(), null));
+        orbits.add(b);
     }
     
 
     public void generateEllipse(double a, double b, double AoP, double LoA, double inc){
         
-        a=a*d.width/(2/scale);
-        b=b*d.width/(2/scale);
+        a=0.5d*a*d.width*scale;
+        b=0.5d*b*d.width*scale;
         
         
         final double cosB = Math.cos(AoP+LoA);

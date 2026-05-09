@@ -59,6 +59,7 @@ public class AntennaVisualizer extends JPanel{
         antennaSelectorBox.setBackground(master.BGCOLOR);
         antennaSelectorBox.setForeground(master.FONTCOLOR);
         antennaSelectorBox.setFont(font);
+        antennaSelectorBox.setToolTipText("Click antennae to remove them");
         antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         antennaSelectorBox.addActionListener(e -> {
             if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2) {
@@ -109,7 +110,6 @@ public class AntennaVisualizer extends JPanel{
         add(displayer, c);
         c.gridy = 1;
         add(antennaSelectorBox, c);
-        
     }
     
     public void updateColors() {

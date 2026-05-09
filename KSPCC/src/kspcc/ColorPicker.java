@@ -8,11 +8,11 @@ public class ColorPicker extends JPanel{
     
     public Color color;
 
-    public void init(Color bg, Color fg, Font font, Color initColor, String place, BG master) {
+    public void init(Color initColor, String place, BG master) {
         
         color = initColor;
         
-        setBackground(bg);
+        setBackground(master.BGCOLOR);
         setLayout(new GridBagLayout());
         
         NumberFormat intFormat = NumberFormat.getInstance();
@@ -27,9 +27,6 @@ public class ColorPicker extends JPanel{
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.LINE_START;
         JLabel colorLabel = new JLabel(place + " Orbit Color:");
-        colorLabel.setBackground(bg);
-        colorLabel.setForeground(fg);
-        colorLabel.setFont(font.deriveFont(Font.BOLD));
         add(colorLabel, c);
         
         c.gridx = 0;
@@ -53,7 +50,7 @@ public class ColorPicker extends JPanel{
         JFormattedTextField redIn = new JFormattedTextField(intFormat);
         redIn.setColumns(3);
         redIn.setValue(initColor.getRed());
-        redIn.setCaretColor(fg);
+        redIn.setCaretColor(master.FONTCOLOR);
         redIn.setFocusLostBehavior(JFormattedTextField.REVERT);
         add(redIn, c);
         redIn.addActionListener(e -> {
@@ -66,7 +63,7 @@ public class ColorPicker extends JPanel{
         JFormattedTextField greenIn = new JFormattedTextField(intFormat);
         greenIn.setColumns(3);
         greenIn.setValue(initColor.getGreen());
-        greenIn.setCaretColor(fg);
+        greenIn.setCaretColor(master.FONTCOLOR);
         greenIn.setFocusLostBehavior(JFormattedTextField.REVERT);
         greenIn.addActionListener(e -> {
             greenIn.setValue(Math.min(Integer.parseInt(greenIn.getValue()+""), 255));
@@ -79,7 +76,7 @@ public class ColorPicker extends JPanel{
         JFormattedTextField blueIn = new JFormattedTextField(intFormat);
         blueIn.setColumns(3);
         blueIn.setValue(initColor.getBlue());
-        blueIn.setCaretColor(fg);
+        blueIn.setCaretColor(master.FONTCOLOR);
         blueIn.setFocusLostBehavior(JFormattedTextField.REVERT);
         blueIn.addActionListener(e -> {
             blueIn.setValue(Math.min(Integer.parseInt(blueIn.getValue()+""), 255));
@@ -89,10 +86,11 @@ public class ColorPicker extends JPanel{
         add(blueIn, c);
         
         for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(bg);
-            getComponent(i).setForeground(fg);
-            getComponent(i).setFont(font);
+            getComponent(i).setBackground(master.BGCOLOR);
+            getComponent(i).setForeground(master.FONTCOLOR);
+            getComponent(i).setFont(master.GLOBALFONT.deriveFont(16f));
         }
+        colorLabel.setFont(master.GLOBALFONT.deriveFont(Font.BOLD, 16f));
     }
     
     public void updateColorMode(){

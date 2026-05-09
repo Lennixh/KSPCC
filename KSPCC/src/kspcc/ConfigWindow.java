@@ -20,10 +20,11 @@ public class ConfigWindow {
     
     private Image image;
     
-    public ConfigWindow(Color bg, Color fg, BG master, Font font, Image image){
+    public ConfigWindow(BG master, Image image){
         
         this.master = master;
         this.image = image;
+        
         cfgWindow = new JFrame("Settings");
         cfgWindow.setIconImage(image);
         cfgWindow.setAlwaysOnTop(true);
@@ -37,7 +38,7 @@ public class ConfigWindow {
         });
         
         elementContainer = new JPanel();
-        elementContainer.setBackground(bg);
+        elementContainer.setBackground(master.BGCOLOR);
         elementContainer.setLayout(new GridBagLayout());
         elementContainer.setPreferredSize(new Dimension(512,512));
         
@@ -48,27 +49,32 @@ public class ConfigWindow {
         c.weighty = 0;
         c.insets = new Insets(20,0,35,0);
         JLabel settingsLabel = new JLabel("Settings");
-        settingsLabel.setBackground(bg);
-        settingsLabel.setForeground(fg);
-        settingsLabel.setFont(font.deriveFont(Font.BOLD, 30));
+        settingsLabel.setBackground(master.BGCOLOR);
+        settingsLabel.setForeground(master.FONTCOLOR);
+        settingsLabel.setFont(master.GLOBALFONT.deriveFont(Font.BOLD, 30));
         elementContainer.add(settingsLabel);
         
         c.insets = new Insets(0,15,20,0);
         c.gridy = 1;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         cp1 = new ColorPicker();
-        cp1.init(bg, fg, font, master.color1, "First", master);
+        cp1.init(master.color1, "First", master);
         elementContainer.add(cp1, c);
-        
+
         c.gridy = 2;
-        c.weighty = 1;
-        c.weightx = 1;
         cp2 = new ColorPicker();
-        cp2.init(bg, fg, font, master.color2, "Second", master);
+        cp2.init(master.color2, "Second", master);
         elementContainer.add(cp2, c);
         
+        c.gridy = 3;
+        c.weighty = 1;
+        c.weightx = 1;
+        SystemSelectors sysS = new SystemSelectors();
+        sysS.init(master);
+        elementContainer.add(sysS, c);
+        
         JScrollPane scroller = new JScrollPane(elementContainer, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroller.setBackground(bg);
+        scroller.setBackground(master.BGCOLOR);
         cfgWindow.add(scroller);
         
         cfgWindow.pack();

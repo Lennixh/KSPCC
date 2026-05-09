@@ -15,13 +15,11 @@ public class Body {
     
     private Body parent;
     
-    private ArrayList<Body> children;
-    
     public Body(){
         this("",0,0,0,0,0,null);
     }
     
-    public Body(String name, double SMA, float E, double inc, double AoP, double LoA, Body parent){
+    public Body(String name, double SMA, float E, double inc, double LoA, double AoP, Body parent){
         this.name = name;
         this.SMA = SMA;
         this.E = E;
@@ -31,33 +29,12 @@ public class Body {
         this.AoP = AoP;
         this.LoA = LoA;
         this.parent = parent;
-        this.children = new ArrayList<>();
-        if (parent != null) {
-            parent.addChild(this);
-        }
-    }
+    } 
     
-    public void printAllChildren(){
-        for (Body b : children) {
-            System.out.println(b.getName());
-            b.printAllChildren();
-        }
-    }
-    public void printDirectChildren(){
-        for (Body b : children) {
-            System.out.println(b.getName());
-        }
-    }
-    public boolean hasChildren(){
-        return !children.isEmpty();
-    }
     public boolean hasParent(){
         return parent == null;
     }
     
-    public ArrayList<Body> getDirectChildren(){
-        return children;
-    }
     public String getName(){
         return name;
     }
@@ -86,8 +63,8 @@ public class Body {
         return inc;
     }
     
-    public void addChild(Body child){
-        children.add(child);
+    public Body getParent(){
+        return parent;
     }
     
     public void setName(String newName){
