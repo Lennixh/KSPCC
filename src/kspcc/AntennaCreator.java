@@ -109,7 +109,7 @@ public class AntennaCreator {
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e->{
             close();
-            av.antennae.add(new Antenna(nameField.getText(), (double)rangeField.getValue(), unit.getSelectedIndex(), (float)ceField.getValue()));
+            av.antennae.add(new Antenna(nameField.getText(), (double)rangeField.getValue(), unit.getSelectedIndex(), (float)ceField.getValue(), Antenna.DIRECT));
             av.selectorStrings.add(av.antennae.size()-1, av.antennae.get(av.antennae.size()-1).getName());
             av.antennaSelectorBox.removeAllItems();
             for (String s : av.selectorStrings) {

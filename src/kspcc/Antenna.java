@@ -13,25 +13,14 @@ public class Antenna {
     
     private float compatabilityExponent;
     
-    private int relay;
+    private int type;
     
-    public Antenna(String name, double strength){
-        this(name, strength, 1);
-    }
-    public Antenna(String name, double strength, int unit){
-        this(name, strength, unit, 0.75f);
-    }
-    
-    public Antenna(String name, double strength, int unit, float compatabilityExponent){
-        this(name, strength, unit, compatabilityExponent, DIRECT);
-    }
-    
-    public Antenna(String name, double strength, int unit, float compatabilityExponent, int relay){
+    public Antenna(String name, double strength, int unit, float compatabilityExponent, int type){
         this.name = name;
         this.strength = strength;
         this.unit = unit;
         this.compatabilityExponent = compatabilityExponent;
-        this.relay = relay;
+        this.type = type;
     }
     
     public String getName(){

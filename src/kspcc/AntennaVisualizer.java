@@ -43,16 +43,16 @@ public class AntennaVisualizer extends JPanel{
         antennae = new ArrayList<>();
         antennae.add(new Antenna("Communotron 16", 500, 3, 1.0f, Antenna.DIRECT));
         antennae.add(new Antenna("Communotron 16-S", 500, 3, 0.0f, Antenna.DIRECT));
-        antennae.add(new Antenna("HG-5 High Gain Antenna", 5, 2, Antenna.RELAY));
-        antennae.add(new Antenna("Communotron DTS-M1", 2, Antenna.DIRECT));
-        antennae.add(new Antenna("RA-2 Relay Antenna", 2, Antenna.RELAY));
-        antennae.add(new Antenna("Communotron HG-55", 15, Antenna.DIRECT));
-        antennae.add(new Antenna("RA-15 Relay Antenna", 15, Antenna.RELAY));
-        antennae.add(new Antenna("Communotron 88-88", 100, Antenna.DIRECT));
-        antennae.add(new Antenna("RA-100 Relay Antenna", 100, Antenna.RELAY));
-        antennae.add(new Antenna("Level 1 TS", 2, Antenna.RELAY));
-        antennae.add(new Antenna("Level 2 TS", 50, Antenna.RELAY));
-        antennae.add(new Antenna("Level 3 TS", 250, Antenna.RELAY));
+        antennae.add(new Antenna("HG-5 High Gain Antenna", 5, 2, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron DTS-M1", 2, 1, 0.75f, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-2 Relay Antenna", 2, 1, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron HG-55", 15, 1, 0.75f, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-15 Relay Antenna", 15, 1, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron 88-88", 100, 1, 0.75f, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-100 Relay Antenna", 100, 1, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Level 1 TS", 2, 1, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Level 2 TS", 50, 1, 0.75f, Antenna.RELAY));
+        antennae.add(new Antenna("Level 3 TS", 250, 1, 0.75f, Antenna.RELAY));
         
         
         selectorStrings = new ArrayList<>();
