@@ -7,14 +7,20 @@ public class InfoWindow {
 
     public JFrame HELPWINDOW = new JFrame("Info");
 
+    private BG master;
+
+    private JPanel holder;
+
     public static final ImageIcon helpWhite = new ImageIcon(KSPCC.class.getResource("resources/helpIconWhite.png"));
     public static final ImageIcon helpBlack = new ImageIcon(KSPCC.class.getResource("resources/helpIconBlack.png"));
 
     public InfoWindow(BG master){
 
+        this.master = master;
+
         HELPWINDOW.setIconImage(helpWhite.getImage());
 
-        JPanel holder = new JPanel();
+        holder = new JPanel();
         holder.setBackground(master.BGCOLOR);
         holder.setForeground(master.FONTCOLOR);
         holder.setPreferredSize(new Dimension(800,800));
@@ -62,5 +68,20 @@ public class InfoWindow {
         HELPWINDOW.add(scroller);
         HELPWINDOW.pack();
         HELPWINDOW.setLocation(560, 140);
+    }
+
+    public void updateColors(){
+        if (HELPWINDOW.getIconImage() == helpWhite.getImage()){
+            System.out.println("esdrtfzuhiujuhzt7ftgvbh");
+            HELPWINDOW.setIconImage(helpBlack.getImage());
+        } else {
+            HELPWINDOW.setIconImage(helpWhite.getImage());
+        }
+        for (int i = 0; i < holder.getComponentCount(); i++){
+            holder.getComponent(i).setForeground(master.FONTCOLOR);
+            holder.getComponent(i).setBackground(master.BGCOLOR);
+        }
+        holder.setForeground(master.FONTCOLOR);
+        holder.setBackground(master.BGCOLOR);
     }
 }

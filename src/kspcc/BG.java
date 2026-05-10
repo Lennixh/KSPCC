@@ -34,11 +34,12 @@ public class BG extends JPanel{
     private OrbitCustomiser oc2;
     
     private ConfigWindow cfgWindow;
+    private InfoWindow iw;
+    private JButton helpButton;
     
     private JLabel firstBodyLabel;
     private JLabel secondBodyLabel;
-    
-    
+
     private ArrayList<Body> parentBodies = new ArrayList<>();
     private ArrayList<Body> availableBodies = new ArrayList<>();
     
@@ -293,12 +294,12 @@ public class BG extends JPanel{
         add(configButton, c);
 
         c.insets = new Insets(0,0,0,48);
-        JButton helpButton = new JButton();
+        helpButton = new JButton();
         helpButton.setBackground(BGCOLOR);
         helpButton.setForeground(FONTCOLOR);
         helpButton.setPreferredSize(new Dimension(32,32));
         helpButton.setBorderPainted(false);
-        InfoWindow iw = new InfoWindow(this);
+        iw = new InfoWindow(this);
         helpButton.setIcon(InfoWindow.helpWhite);
         helpButton.addActionListener(e->{
             iw.HELPWINDOW.setVisible(!iw.HELPWINDOW.isVisible());
@@ -504,6 +505,12 @@ public class BG extends JPanel{
         oc1.updateColors();
         oc2.updateColors();
         cfgWindow.updateColors();
+        iw.updateColors();
+        if (darkMode) {
+            helpButton.setIcon(InfoWindow.helpWhite);
+        } else {
+            helpButton.setIcon(InfoWindow.helpBlack);
+        }
     }
     
     //value in GM
