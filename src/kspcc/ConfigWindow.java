@@ -60,21 +60,21 @@ public class ConfigWindow {
         c.gridy = 1;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         cp1 = new ColorPicker();
-        cp1.init(master.color1, "First", master);
+        cp1.init(master.color1, "First Orbit", master);
         elementContainer.add(cp1, c);
 
         c.gridy = 2;
         cp2 = new ColorPicker();
-        cp2.init(master.color2, "Second", master);
+        cp2.init(master.color2, "Second Orbit", master);
         elementContainer.add(cp2, c);
-        
+
         c.gridy = 3;
-        c.weighty = 1;
         c.weightx = 1;
+        c.weighty = 1;
         sysS = new SystemSelectors();
         sysS.init(master);
         elementContainer.add(sysS, c);
-        
+	
         JScrollPane scroller = new JScrollPane(elementContainer, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroller.setBackground(master.BGCOLOR);
         cfgWindow.add(scroller);

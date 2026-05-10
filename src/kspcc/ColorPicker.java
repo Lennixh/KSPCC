@@ -26,7 +26,7 @@ public class ColorPicker extends JPanel{
         c.gridy = 0;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.LINE_START;
-        JLabel colorLabel = new JLabel(place + " Orbit Color:");
+        JLabel colorLabel = new JLabel(place + " Color:");
         add(colorLabel, c);
         
         c.gridx = 0;
@@ -101,11 +101,11 @@ public class ColorPicker extends JPanel{
     }
     
     private void updateColors(BG master, String place){
-        if (place.equals("First")) {
-                master.color1 = color;
-            } else {
-                master.color2 = color;
-            }
-            master.updateLabels();
+        if (place.equals("First Orbit")) {
+            master.color1 = color;
+        } else {
+            master.color2 = color;
+        }
+        master.updateLabels();
     }
 }

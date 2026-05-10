@@ -282,7 +282,7 @@ public class BG extends JPanel{
         ImageIcon configBlack = new ImageIcon(configBlackURL);
         configButton.setIcon(configWhite);
         cfgWindow = new ConfigWindow(this, configWhite.getImage());
-        configButton.addActionListener(e->{
+        configButton.addActionListener(e-> {
             configOpen = !configOpen;
             if (configOpen) {
                 cfgWindow.open();
@@ -290,9 +290,21 @@ public class BG extends JPanel{
                 cfgWindow.close();
             }
         });
-        
         add(configButton, c);
-        
+
+        c.insets = new Insets(0,0,0,48);
+        JButton helpButton = new JButton();
+        helpButton.setBackground(BGCOLOR);
+        helpButton.setForeground(FONTCOLOR);
+        helpButton.setPreferredSize(new Dimension(32,32));
+        helpButton.setBorderPainted(false);
+        InfoWindow iw = new InfoWindow(this);
+        helpButton.setIcon(InfoWindow.helpWhite);
+        helpButton.addActionListener(e->{
+            iw.HELPWINDOW.setVisible(!iw.HELPWINDOW.isVisible());
+        });
+        add(helpButton, c);
+
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
