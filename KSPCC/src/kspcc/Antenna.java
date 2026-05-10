@@ -3,12 +3,17 @@ package kspcc;
 
 public class Antenna {
     
+    public static final int RELAY = 0;
+    public static final int DIRECT = 1;
+    
     private String name;
     
     private double strength;
     private int unit;
     
     private float compatabilityExponent;
+    
+    private int relay;
     
     public Antenna(String name, double strength){
         this(name, strength, 1);
@@ -18,10 +23,15 @@ public class Antenna {
     }
     
     public Antenna(String name, double strength, int unit, float compatabilityExponent){
+        this(name, strength, unit, compatabilityExponent, DIRECT);
+    }
+    
+    public Antenna(String name, double strength, int unit, float compatabilityExponent, int relay){
         this.name = name;
         this.strength = strength;
         this.unit = unit;
         this.compatabilityExponent = compatabilityExponent;
+        this.relay = relay;
     }
     
     public String getName(){

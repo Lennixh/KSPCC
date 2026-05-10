@@ -8,20 +8,24 @@ public class AntennaVisualizer extends JPanel{
     
     private JFrame f;
     private BG master;
-    private ArrayList<Antenna> antennae;
-    private ArrayList<String> selectorStrings;
+    public ArrayList<Antenna> antennae;
+    public ArrayList<String> selectorStrings;
     ArrayList<String> units;
         
     private ArrayList<Antenna> vesselAntennae;
     
     JPanel displayer;
     
-    private JComboBox antennaSelectorBox;
+    public JComboBox antennaSelectorBox;
+    
+    private AntennaCreator ac;
     
     public void init(Font font, JFrame f, BG master){
         
         this.f = f;
         this.master = master;
+
+        ac = new AntennaCreator(master, this);
         
         setLayout(new GridBagLayout());
         setBackground(master.BGCOLOR);
@@ -37,18 +41,18 @@ public class AntennaVisualizer extends JPanel{
         vesselAntennae = new ArrayList<>();
         
         antennae = new ArrayList<>();
-        antennae.add(new Antenna("Communotron 16", 500, 3, 1.0f));
-        antennae.add(new Antenna("Communotron 16-S", 500, 3, 0.0f));
-        antennae.add(new Antenna("HG-5 High Gain Antenna", 5, 2));
-        antennae.add(new Antenna("Communotron DTS-M1", 2));
-        antennae.add(new Antenna("RA-2 Relay Antenna", 2));
-        antennae.add(new Antenna("Communotron HG-55", 15));
-        antennae.add(new Antenna("RA-15 Relay Antenna", 15));
-        antennae.add(new Antenna("Communotron 88-88", 100));
-        antennae.add(new Antenna("RA-100 Relay Antenna", 100));
-        antennae.add(new Antenna("Level 1 TS", 2));
-        antennae.add(new Antenna("Level 2 TS", 50));
-        antennae.add(new Antenna("Level 3 TS", 250));
+        antennae.add(new Antenna("Communotron 16", 500, 3, 1.0f, Antenna.DIRECT));
+        antennae.add(new Antenna("Communotron 16-S", 500, 3, 0.0f, Antenna.DIRECT));
+        antennae.add(new Antenna("HG-5 High Gain Antenna", 5, 2, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron DTS-M1", 2, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-2 Relay Antenna", 2, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron HG-55", 15, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-15 Relay Antenna", 15, Antenna.RELAY));
+        antennae.add(new Antenna("Communotron 88-88", 100, Antenna.DIRECT));
+        antennae.add(new Antenna("RA-100 Relay Antenna", 100, Antenna.RELAY));
+        antennae.add(new Antenna("Level 1 TS", 2, Antenna.RELAY));
+        antennae.add(new Antenna("Level 2 TS", 50, Antenna.RELAY));
+        antennae.add(new Antenna("Level 3 TS", 250, Antenna.RELAY));
         
         
         selectorStrings = new ArrayList<>();
@@ -65,7 +69,7 @@ public class AntennaVisualizer extends JPanel{
         antennaSelectorBox.setToolTipText("Click antennae to remove them");
         antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         antennaSelectorBox.addActionListener(e -> {
-            if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2) {
+            if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2 && !master.creatorOpen) {
                 vesselAntennae.add(antennae.get(antennaSelectorBox.getSelectedIndex()));
                 JButton anntennaHandler = new JButton(vesselAntennae.get(vesselAntennae.size()-1).getName());
                 anntennaHandler.setFont(font);
@@ -90,18 +94,8 @@ public class AntennaVisualizer extends JPanel{
                 
                 master.updateLabels();
             }
-            if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 ) {
-                String name = fetchUserAntennaName("Input name of Antenna");
-                int unit = units.indexOf(fetchUserUnit());
-                double signalStrength = Double.parseDouble(fetchUserDoubleAsString("Input signal strength of antenna"));
-                float compatabilityEponent = Float.parseFloat(fetchUserFloatAsString("Input compatability exponent \n(leave blank for standard 0.75)"));
-                Antenna customAntenna = new Antenna(name, signalStrength, unit, compatabilityEponent);
-                antennae.add(customAntenna);
-                selectorStrings.add(antennae.size()-1, customAntenna.getName());
-                antennaSelectorBox.removeAllItems();
-                for (String s : selectorStrings) {
-                    antennaSelectorBox.addItem(s);
-                }
+            if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 && !master.creatorOpen) {
+                ac.open();
             }
             antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         });
