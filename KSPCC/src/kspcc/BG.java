@@ -62,6 +62,7 @@ public class BG extends JPanel{
     public Color color2 = Color.CYAN;
     
     public boolean configOpen = false;
+    public boolean creatorOpen = false;
     public boolean darkMode = true;
     
     public void init(JFrame f){
