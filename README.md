@@ -37,8 +37,9 @@ The executable of KSPCC is portable, which means that you only need to download 
 
 (_KSPCC.jar File Size ~50KB_)
 Alternatively, you can download the jar instead. To run it, navigate to its directory on your computer, and open a terminal there. In the terminal, type
-~~~ java -jar "KSPCC.jar" ~~~ 
-
+~~~
+java -jar "KSPCC.jar"
+~~~ 
 
 ## **Build Instructions**
 
