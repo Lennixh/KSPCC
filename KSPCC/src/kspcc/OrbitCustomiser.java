@@ -19,10 +19,18 @@ public class OrbitCustomiser extends JPanel{
     private ArrayList<String> units;
     private int unit = 1;
     
+    private JFormattedTextField SMAnumIn;
+    private JFormattedTextField EccentricityIn;
+    private JFormattedTextField InclinationIn;
+    private JFormattedTextField LoAIn;
+    private JFormattedTextField AoPIn;
+    
+    private boolean first;
+    
     public void init(Font font, Color fg, BG master, boolean first){
         
         this.master = master;
-        
+        this.first = first;
         body = new Body("b", 1, 0, 0, 0, 0, null);
     
         NumberFormat doubleFormat = NumberFormat.getNumberInstance();
@@ -54,7 +62,7 @@ public class OrbitCustomiser extends JPanel{
         add(new JLabel("SMA:"),c);
         
         c.gridx = 1;
-        JFormattedTextField SMAnumIn = new JFormattedTextField(doubleFormat);
+        SMAnumIn= new JFormattedTextField(doubleFormat);
         SMAnumIn.setValue(body.getSMA());
         SMAnumIn.setColumns(10);
         SMAnumIn.setSelectionColor(fg);
@@ -82,7 +90,7 @@ public class OrbitCustomiser extends JPanel{
         add(new JLabel("Eccentricity:"),c);
         
         c.gridx = 1;
-        JFormattedTextField EccentricityIn = new JFormattedTextField(floatFormat);
+        EccentricityIn = new JFormattedTextField(floatFormat);
         EccentricityIn.setValue(body.getE());
         EccentricityIn.setColumns(10);
         EccentricityIn.setSelectionColor(fg);
@@ -100,7 +108,7 @@ public class OrbitCustomiser extends JPanel{
         add(new JLabel("Inclination:"),c);
         
         c.gridx = 1;
-        JFormattedTextField InclinationIn = new JFormattedTextField(doubleFormat);
+        InclinationIn = new JFormattedTextField(doubleFormat);
         InclinationIn.setValue(body.getInc());
         InclinationIn.setColumns(10);       
         InclinationIn.setSelectionColor(fg);
@@ -119,32 +127,10 @@ public class OrbitCustomiser extends JPanel{
         c.gridx = 0;
         c.gridy = 3;
         c.anchor = GridBagConstraints.LINE_END;
-        add(new JLabel("AoP:"),c);
-        
-        c.gridx = 1;
-        JFormattedTextField AoPIn = new JFormattedTextField(doubleFormat);
-        AoPIn.setValue(body.getAoP());
-        AoPIn.setColumns(10);       
-        AoPIn.setSelectionColor(fg);
-        AoPIn.setCaretColor(fg);
-        AoPIn.addActionListener(e -> {
-            body.setAoP(Double.parseDouble(AoPIn.getValue()+"")%360d);
-            AoPIn.setValue(body.getAoP());
-            master.updateLabels();
-        });
-        add(AoPIn,c);
-        
-        c.gridx = 2;
-        c.anchor = GridBagConstraints.LINE_START;
-        add(new JLabel("°"),c);
-        
-        c.gridx = 0;
-        c.gridy = 4;
-        c.anchor = GridBagConstraints.LINE_END;
         add(new JLabel("LoA:"),c);
         
         c.gridx = 1;
-        JFormattedTextField LoAIn = new JFormattedTextField(doubleFormat);
+        LoAIn = new JFormattedTextField(doubleFormat);
         LoAIn.setValue(body.getLoA());
         LoAIn.setColumns(10);       
         LoAIn.setSelectionColor(fg);
@@ -155,6 +141,28 @@ public class OrbitCustomiser extends JPanel{
             master.updateLabels();
         });
         add(LoAIn,c);
+        
+        c.gridx = 2;
+        c.anchor = GridBagConstraints.LINE_START;
+        add(new JLabel("°"),c);
+        
+        c.gridx = 0;
+        c.gridy = 4;
+        c.anchor = GridBagConstraints.LINE_END;
+        add(new JLabel("AoP:"),c);
+        
+        c.gridx = 1;
+        AoPIn = new JFormattedTextField(doubleFormat);
+        AoPIn.setValue(body.getAoP());
+        AoPIn.setColumns(10);       
+        AoPIn.setSelectionColor(fg);
+        AoPIn.setCaretColor(fg);
+        AoPIn.addActionListener(e -> {
+            body.setAoP(Double.parseDouble(AoPIn.getValue()+"")%360d);
+            AoPIn.setValue(body.getAoP());
+            master.updateLabels();
+        });
+        add(AoPIn,c);
         
         c.gridx = 2;
         c.anchor = GridBagConstraints.LINE_START;
@@ -261,6 +269,7 @@ public class OrbitCustomiser extends JPanel{
         for (int i = 0; i < getComponentCount(); i++) {
             getComponent(i).setBackground(master.BGCOLOR);
         }
+
     }
     
     private Body getBodyFromFile(Scanner sc, Body b) {
@@ -301,5 +310,15 @@ public class OrbitCustomiser extends JPanel{
         for (int i = 0; i < getComponentCount(); i++) {
             getComponent(i).setForeground(c);
         }
+        SMAnumIn.setCaretColor(c);
+        EccentricityIn.setCaretColor(c);
+        InclinationIn.setCaretColor(c);
+        LoAIn.setCaretColor(c);
+        AoPIn.setCaretColor(c);
+        SMAnumIn.setSelectionColor(c);
+        EccentricityIn.setSelectionColor(c);
+        InclinationIn.setSelectionColor(c);
+        LoAIn.setSelectionColor(c);
+        AoPIn.setSelectionColor(c);
     }
 }
