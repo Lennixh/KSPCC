@@ -44,17 +44,22 @@ and hit enter to launch KSPCC.
 
 ## **Build Instructions**
 
-**You need to have Java version 8 or newer installed to build KSPCC from source, I have only done this on Windows**
+**You need to have Java version 8 or newer installed to build KSPCC from source**
 
-To build KSPCC, you need to download its source code, and navigate to its directory. Open the src folder in a terminal, decide on a build folder, and type:
+To build KSPCC, you need to download its source code folder, and unzip it somewhere. Then, in a terminal, navigate to where you downloaded it to. Navigate into the src folder, and in your terminal type:
 ~~~
 javac --release 8 -d <Path to Build Folder> kspcc/KSPCC.java
 ~~~
-Then you have to copy over the resoures folder in kspcc, which is system specific. For Windows(in Powershell) it is:
+Then you have to copy over the resoures folder inside the kspcc folder. You can do this manually, or with a OS specific command. For Windows(in Powershell) it is:
 ~~~
 Copy-Item -Recurse kspcc/resources <Path to Build Folder/kspcc/resources>
 ~~~
-Then navigate to your build folder, and run:
+For Linux, its:
+~~~
+cp -R kspcc/resources <Path to Build Folder/kspcc/>
+~~~
+
+Then navigate to your build folder, open it, and run:
 ~~~
 jar -cfe KSPCC.jar kspcc.KSPCC kspcc/*
 ~~~
