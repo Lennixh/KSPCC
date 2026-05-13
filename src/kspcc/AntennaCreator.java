@@ -6,7 +6,8 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class AntennaCreator {
+public class AntennaCreator
+{
     
     private JFrame creatorWindow;
     
@@ -18,7 +19,8 @@ public class AntennaCreator {
     private int screenHeight;
 
     
-    public AntennaCreator(BG master, AntennaVisualizer av){
+    public AntennaCreator(BG master, AntennaVisualizer av)
+    {
         
         ArrayList<String> units = new ArrayList<>();
         units.add("Tm");
@@ -44,8 +46,10 @@ public class AntennaCreator {
         creatorWindow.setAlwaysOnTop(true);
         creatorWindow.setPreferredSize(new Dimension(512,256));
         creatorWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        creatorWindow.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+        creatorWindow.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
                 master.creatorOpen = false;
                 close();
             }
@@ -107,12 +111,14 @@ public class AntennaCreator {
         c.gridy = 3;
         c.insets = new Insets(20,20,0,20);
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(e->{
+        addButton.addActionListener(e->
+        {
             close();
             av.antennae.add(new Antenna(nameField.getText(), (double)rangeField.getValue(), unit.getSelectedIndex(), (float)ceField.getValue(), Antenna.DIRECT));
             av.selectorStrings.add(av.antennae.size()-1, av.antennae.get(av.antennae.size()-1).getName());
             av.antennaSelectorBox.removeAllItems();
-            for (String s : av.selectorStrings) {
+            for (String s : av.selectorStrings)
+            {
                 av.antennaSelectorBox.addItem(s);
             }
         });
@@ -122,12 +128,14 @@ public class AntennaCreator {
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.LINE_START;
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e->{
+        cancelButton.addActionListener(e->
+        {
             close();
         });
         elementContainer.add(cancelButton, c);
         
-        for (int i = 0; i < elementContainer.getComponentCount(); i++) {
+        for (int i = 0; i < elementContainer.getComponentCount(); i++)
+        {
             elementContainer.getComponent(i).setBackground(master.BGCOLOR);
             elementContainer.getComponent(i).setForeground(master.FONTCOLOR);
             elementContainer.getComponent(i).setFont(master.GLOBALFONT.deriveFont(16f));
@@ -137,12 +145,14 @@ public class AntennaCreator {
         creatorWindow.pack();
     }
         
-    public void open(){
+    public void open()
+    {
         creatorWindow.setVisible(true);
         master.creatorOpen = true;
     }
     
-    public void close(){
+    public void close()
+    {
         creatorWindow.setVisible(false);
         master.creatorOpen = false;
     }

@@ -4,7 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class AntennaVisualizer extends JPanel{
+public class AntennaVisualizer extends JPanel
+{
     
     private JFrame f;
     private BG master;
@@ -20,7 +21,8 @@ public class AntennaVisualizer extends JPanel{
     
     private AntennaCreator ac;
     
-    public void init(Font font, JFrame f, BG master){
+    public void init(Font font, JFrame f, BG master)
+    {
         
         this.f = f;
         this.master = master;
@@ -68,15 +70,18 @@ public class AntennaVisualizer extends JPanel{
         antennaSelectorBox.setFont(font);
         antennaSelectorBox.setToolTipText("Click antennae to remove them");
         antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
-        antennaSelectorBox.addActionListener(e -> {
-            if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2 && !master.creatorOpen) {
+        antennaSelectorBox.addActionListener(e ->
+        {
+            if (antennaSelectorBox.getSelectedIndex() < antennaSelectorBox.getItemCount()-2 && !master.creatorOpen)
+            {
                 vesselAntennae.add(antennae.get(antennaSelectorBox.getSelectedIndex()));
                 JButton anntennaHandler = new JButton(vesselAntennae.get(vesselAntennae.size()-1).getName());
                 anntennaHandler.setFont(font);
                 anntennaHandler.setBackground(master.BGCOLOR);
                 anntennaHandler.setForeground(master.FONTCOLOR);
                 
-                anntennaHandler.addActionListener(ex ->{
+                anntennaHandler.addActionListener(ex ->
+                {
                     int ind = displayer.getComponentCount()-1;
                     vesselAntennae.remove(ind);
                     displayer.remove(anntennaHandler);
@@ -94,7 +99,8 @@ public class AntennaVisualizer extends JPanel{
                 
                 master.updateLabels();
             }
-            if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 && !master.creatorOpen) {
+            if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2 && !master.creatorOpen)
+            {
                 ac.open();
             }
             antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
@@ -110,7 +116,8 @@ public class AntennaVisualizer extends JPanel{
     }
     
     public void updateColors() {
-        for (int i = 0; i < displayer.getComponentCount(); i++) {
+        for (int i = 0; i < displayer.getComponentCount(); i++)
+        {
             displayer.getComponent(i).setBackground(master.BGCOLOR);
             displayer.getComponent(i).setForeground(master.FONTCOLOR);
         }
@@ -120,53 +127,68 @@ public class AntennaVisualizer extends JPanel{
         antennaSelectorBox.setForeground(master.FONTCOLOR);
     }
     
-    private String fetchUserUnit(){
+    private String fetchUserUnit()
+    {
         String s = (String) JOptionPane.showInputDialog(f, "Input unit\n(Options: Tm, Gm, Mm, Km, m)", "");
-        if (!units.contains(s)) {
+        if (!units.contains(s))
+        {
             s = fetchUserUnit();
         }
         return s;
     }
     
-    private String fetchUserFloatAsString(String message){
+    private String fetchUserFloatAsString(String message)
+    {
         String s = (String) JOptionPane.showInputDialog(f, message, "");
-        try {
-            if (s.equals("")) {
+        try
+        {
+            if (s.equals(""))
+            {
                 s = "0.75";
             }
             double val = Float.parseFloat(s);
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             s = fetchUserDoubleAsString(message);
         }
         return s;
     }
     
-    private String fetchUserDoubleAsString(String message){
+    private String fetchUserDoubleAsString(String message)
+    {
         String s = (String) JOptionPane.showInputDialog(f, message, "");
-        try {
-            if (s.equals("")) {
+        try
+        {
+            if (s.equals(""))
+            {
                 s = "1";
             }
             double val = Double.parseDouble(s);
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             s = fetchUserDoubleAsString(message);
         }
         return s;
     }
     
-    private String fetchUserAntennaName(String message){
+    private String fetchUserAntennaName(String message)
+    {
         String s = (String) JOptionPane.showInputDialog(f, message, "");
-        if (s.equals("")){
+        if (s.equals(""))
+        {
             s = "New Antenna " + (selectorStrings.size() - 11);
         }
         return s;
     }
     
 
-    private double getMaxPow(){
+    private double getMaxPow()
+    {
         double maxPow = 0;
-        for (Antenna a : vesselAntennae) {
-            if (a.getStrength() > maxPow) {
+        for (Antenna a : vesselAntennae)
+        {
+            if (a.getStrength() > maxPow)
+            {
                 maxPow = a.getStrength();
             }
         }
@@ -174,27 +196,33 @@ public class AntennaVisualizer extends JPanel{
         return maxPow/1000;
     }
     
-    private double getSumPow(){
+    private double getSumPow()
+    {
         double sumPow = 0;
-        for (Antenna a : vesselAntennae) {
+        for (Antenna a : vesselAntennae)
+        {
             sumPow += a.getStrength();
         }
         //sumPow in megameters, but needed in Gigameters
         return sumPow/1000;
     }
     
-    private float getAverageCompatabilityExponent(){
+    private float getAverageCompatabilityExponent()
+    {
         double num1 = 0;
         double num2 = 0;
-        for (Antenna a : vesselAntennae) {
+        for (Antenna a : vesselAntennae)
+        {
             num1 += a.getStrength()*a.getCompatabilityExponent();
             num2 += a.getStrength();
         }
         return (float) (num1/num2);
     }
     
-    public double getTotalAntennaPower(){
-        if (vesselAntennae.isEmpty()) {
+    public double getTotalAntennaPower()
+    {
+        if (vesselAntennae.isEmpty())
+        {
             return 0d;
         }
         double maxPow = getMaxPow();

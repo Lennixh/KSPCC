@@ -8,7 +8,8 @@ import java.util.Arrays;
 import javax.swing.*;
 
 
-public class BG extends JPanel{
+public class BG extends JPanel
+{
     
     private JFrame f;
     
@@ -66,10 +67,10 @@ public class BG extends JPanel{
     public boolean creatorOpen = false;
     public boolean darkMode = true;
     
-    public void init(JFrame f){
+    public void init(JFrame f)
+    {
         
         this.f = f;
-
 
         JPanel panel = new JPanel();
         
@@ -135,9 +136,12 @@ public class BG extends JPanel{
         c.anchor = GridBagConstraints.PAGE_START;
         referenceBox = new JComboBox();
         referenceBox.setFont(GLOBALFONT.deriveFont(15f));
-        referenceBox.addActionListener(e -> {
-            for (Body b : parentBodies) {
-                if (b.getName() == referenceBox.getSelectedItem()) {
+        referenceBox.addActionListener(e ->
+        {
+            for (Body b : parentBodies)
+            {
+                if (b.getName() == referenceBox.getSelectedItem())
+                {
                     rBody = b;
                 }
             }
@@ -170,9 +174,12 @@ public class BG extends JPanel{
         c.anchor = GridBagConstraints.PAGE_START;
         firstBodyBox = new JComboBox();
         firstBodyBox.setFont(GLOBALFONT.deriveFont(15f));
-        firstBodyBox.addActionListener(e -> {
-            for (Body b : availableBodies) {
-                if (b.getName() == firstBodyBox.getSelectedItem()) {
+        firstBodyBox.addActionListener(e ->
+        {
+            for (Body b : availableBodies)
+            {
+                if (b.getName() == firstBodyBox.getSelectedItem())
+                {
                     tBody1 = b;
                 }
             }
@@ -201,9 +208,12 @@ public class BG extends JPanel{
         c.anchor = GridBagConstraints.PAGE_START;
         secondBodyBox = new JComboBox();
         secondBodyBox.setFont(GLOBALFONT.deriveFont(15f));
-        secondBodyBox.addActionListener(e -> {
-            for (Body b : availableBodies) {
-                if (b.getName() == secondBodyBox.getSelectedItem()) {
+        secondBodyBox.addActionListener(e ->
+        {
+            for (Body b : availableBodies)
+            {
+                if (b.getName() == secondBodyBox.getSelectedItem())
+                {
                     tBody2 = b;
                 }
             }
@@ -286,11 +296,14 @@ public class BG extends JPanel{
         ImageIcon configBlack = new ImageIcon(configBlackURL);
         configButton.setIcon(configWhite);
         cfgWindow = new ConfigWindow(this, configWhite.getImage());
-        configButton.addActionListener(e-> {
+        configButton.addActionListener(e->
+        {
             configOpen = !configOpen;
-            if (configOpen) {
+            if (configOpen)
+            {
                 cfgWindow.open();
-            } else {
+            } else
+            {
                 cfgWindow.close();
             }
         });
@@ -304,7 +317,8 @@ public class BG extends JPanel{
         helpButton.setBorderPainted(false);
         iw = new InfoWindow(this);
         helpButton.setIcon(InfoWindow.helpWhite);
-        helpButton.addActionListener(e->{
+        helpButton.addActionListener(e->
+        {
             iw.HELPWINDOW.setVisible(!iw.HELPWINDOW.isVisible());
         });
         add(helpButton, c);
@@ -323,12 +337,15 @@ public class BG extends JPanel{
         ImageIcon moonIcon = new ImageIcon(moonImageURL);
         ImageIcon sunIcon = new ImageIcon(sunImageURL);
         lightDarkButton.setIcon(moonIcon);
-        lightDarkButton.addActionListener(e->{
+        lightDarkButton.addActionListener(e->
+        {
             darkMode = !darkMode;
-            if (darkMode) {
+            if (darkMode)
+            {
                 lightDarkButton.setIcon(moonIcon);
                 configButton.setIcon(configWhite);
-            } else {
+            } else
+            {
                 lightDarkButton.setIcon(sunIcon);
                 configButton.setIcon(configBlack);
             }
@@ -339,17 +356,21 @@ public class BG extends JPanel{
         updateList();
     }
     
-    public void updateLabels(){
+    public void updateLabels()
+    {
         
         dp.orbits.clear();
         
-        if (!useCustom1) {
+        if (!useCustom1)
+        {
             dp.addOrbit(tBody1);
-        } else {
+        } else
+        {
             dp.addOrbit(oc1.body);
         }
         
-        if (!useCustom2) {
+        if (!useCustom2)
+        {
             dp.addOrbit(tBody2);
         } else {
             dp.addOrbit(oc2.body);
@@ -367,13 +388,16 @@ public class BG extends JPanel{
         secondBodyBox.setForeground(color2);
        
         double[] dists = new double[2];
-        if (rBody == tBody1 && !useCustom1) {
+        if (rBody == tBody1 && !useCustom1)
+        {
             dists[0] = tBody2.getPE();
             dists[1] = tBody2.getAP();
-        } else if (rBody == tBody2 && !useCustom2){
+        } else if (rBody == tBody2 && !useCustom2)
+        {
             dists[0] = tBody1.getPE();
             dists[1] = tBody1.getAP();
-        } else {
+        } else
+        {
             dists = dp.getDists();
         }
         double minDist = dists[0];
@@ -384,10 +408,12 @@ public class BG extends JPanel{
         double minRDist = 1-(minDist/maxRange);
         double maxRDist = 1-(maxDist/maxRange);
         double minDistStrength = 0, maxDistStrength = 0;
-        if (minRDist > 0) {
+        if (minRDist > 0)
+        {
             minDistStrength = (3-(2*minRDist))*(minRDist*minRDist);
         }
-        if (maxRDist > 0) {
+        if (maxRDist > 0)
+        {
             maxDistStrength = (3-(2*maxRDist))*(maxRDist*maxRDist);
         }
         
@@ -403,8 +429,8 @@ public class BG extends JPanel{
         
     }
     
-    public void updateList(){
-        
+    public void updateList()
+    {
         ActionListener temp = referenceBox.getActionListeners()[0];
         referenceBox.removeActionListener(temp);
         
@@ -414,39 +440,52 @@ public class BG extends JPanel{
         referenceBox.removeAllItems();
         
         //adds selectable reference bodies
-        if (sysCombo.charAt(0) == '+') {
-            for (Body b : vanillaBodies) {
-                if (!parentBodies.contains(b.getParent())) {
+        if (sysCombo.charAt(0) == '+')
+        {
+            for (Body b : vanillaBodies)
+            {
+                if (!parentBodies.contains(b.getParent()))
+                {
                     parentBodies.add(b.getParent());
                 }
                 inSystemBodies.add(b);
             }
         }
-        if (sysCombo.charAt(1) == '+') {
-            for (Body b : OPMBodies) {
-                if (!parentBodies.contains(b.getParent())) {
+        if (sysCombo.charAt(1) == '+')
+        {
+            for (Body b : OPMBodies)
+            {
+                if (!parentBodies.contains(b.getParent()))
+                {
                     parentBodies.add(b.getParent());
                 }
                 inSystemBodies.add(b);
             }
         }
-        if (sysCombo.charAt(2) == '+') {
-            for (Body b : MPEBodies) {
-                if (!parentBodies.contains(b.getParent())) {
+        if (sysCombo.charAt(2) == '+')
+        {
+            for (Body b : MPEBodies)
+            {
+                if (!parentBodies.contains(b.getParent()))
+                {
                     parentBodies.add(b.getParent());
                 }
                 inSystemBodies.add(b);
             }
         }
-        if (sysCombo.charAt(3) == '+') {
-            for (Body b : solBodies) {
-                if (!parentBodies.contains(b.getParent())) {
+        if (sysCombo.charAt(3) == '+')
+        {
+            for (Body b : solBodies)
+            {
+                if (!parentBodies.contains(b.getParent()))
+                {
                     parentBodies.add(b.getParent());
                 }
                 inSystemBodies.add(b);
             }
         }
-        for (Body b : parentBodies) {
+        for (Body b : parentBodies)
+        {
             referenceBox.addItem(b.getName());
         }
         referenceBox.setSelectedIndex(parentBodies.indexOf(rBody));
@@ -458,7 +497,8 @@ public class BG extends JPanel{
         updateLabels();
     }
     
-    public void updateChildList(int ind1, int ind2) {
+    public void updateChildList(int ind1, int ind2)
+    {
         
         ActionListener temp1 = firstBodyBox.getActionListeners()[0];
         ActionListener temp2= secondBodyBox.getActionListeners()[0];
@@ -474,8 +514,10 @@ public class BG extends JPanel{
         secondBodyBox.addItem(rBody.getName());
         
         //adds available bodies
-        for (Body b : inSystemBodies) {
-            if (b.getParent() == rBody) {
+        for (Body b : inSystemBodies)
+        {
+            if (b.getParent() == rBody)
+            {
                 availableBodies.add(b);
                 firstBodyBox.addItem(b.getName());
                 secondBodyBox.addItem(b.getName());
@@ -488,13 +530,15 @@ public class BG extends JPanel{
         secondBodyBox.addActionListener(temp2);
     }
     
-    public void updateColors(){
+    public void updateColors()
+    {
         Color temp = BGCOLOR;
         BGCOLOR = FONTCOLOR;
         FONTCOLOR = temp;
         setBackground(BGCOLOR);
         setForeground(FONTCOLOR);
-        for (int i = 0; i < getComponentCount(); i++) {
+        for (int i = 0; i < getComponentCount(); i++)
+        {
             getComponent(i).setBackground(BGCOLOR);
             getComponent(i).setForeground(FONTCOLOR);
         }
@@ -509,23 +553,27 @@ public class BG extends JPanel{
         oc2.updateColors();
         cfgWindow.updateColors();
         iw.updateColors();
-        if (darkMode) {
+        if (darkMode)
+        {
             helpButton.setIcon(InfoWindow.helpWhite);
-        } else {
+        } else
+        {
             helpButton.setIcon(InfoWindow.helpBlack);
         }
     }
     
     //value in GM
-    private int getGoodUnit(double value){
-        if (value == 0) {
+    private int getGoodUnit(double value)
+    {
+        if (value == 0)
+        {
             return 1;
         }
         return 2-Math.min((int)Math.ceil(Math.log10(value)/3),2);
     }
     
-    private double roundToDigits(double val, int n){
+    private double roundToDigits(double val, int n)
+    {
         return (double) Math.round(val*Math.pow(10, n))/Math.pow(10, n);
     }
-    
 }

@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ConfigWindow {
+public class ConfigWindow
+{
     
     private JFrame cfgWindow;
     
@@ -22,8 +23,8 @@ public class ConfigWindow {
     
     private Image image;
     
-    public ConfigWindow(BG master, Image image){
-        
+    public ConfigWindow(BG master, Image image)
+    {
         this.master = master;
         this.image = image;
         
@@ -32,8 +33,10 @@ public class ConfigWindow {
         cfgWindow.setAlwaysOnTop(true);
         cfgWindow.setPreferredSize(new Dimension(512,512));
         cfgWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        cfgWindow.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+        cfgWindow.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
                 master.configOpen = false;
                 close();
             }
@@ -84,8 +87,10 @@ public class ConfigWindow {
         screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
     }
     
-    public void updateColors(){
-        for (int i = 0; i < elementContainer.getComponentCount(); i++) {
+    public void updateColors()
+    {
+        for (int i = 0; i < elementContainer.getComponentCount(); i++)
+        {
             elementContainer.getComponent(i).setBackground(master.BGCOLOR);
             elementContainer.getComponent(i).setForeground(master.FONTCOLOR);
         }
@@ -97,13 +102,15 @@ public class ConfigWindow {
         cfgWindow.setIconImage(image);
     }
     
-    public void open(){
+    public void open()
+    {
         cfgWindow.setLocation((screenWidth-512)/2, (screenHeight-512)/2);
         cfgWindow.setState(JFrame.NORMAL);
         cfgWindow.setVisible(true);
         
     }
-    public void close(){
+    public void close()
+    {
         cfgWindow.setVisible(false);
     }
 }

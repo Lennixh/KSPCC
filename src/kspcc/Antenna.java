@@ -1,8 +1,8 @@
 package kspcc;
 
 
-public class Antenna {
-    
+public class Antenna
+{
     public static final int RELAY = 0;
     public static final int DIRECT = 1;
     
@@ -15,7 +15,8 @@ public class Antenna {
     
     private int type;
     
-    public Antenna(String name, double strength, int unit, float compatabilityExponent, int type){
+    public Antenna(String name, double strength, int unit, float compatabilityExponent, int type)
+    {
         this.name = name;
         this.strength = strength;
         this.unit = unit;
@@ -23,26 +24,30 @@ public class Antenna {
         this.type = type;
     }
     
-    public String getName(){
+    public String getName()
+    {
         return name;
     }
     
-    public double getStrength(){
+    public double getStrength()
+    {
         //in Megameter, just what i chose lol
         return strength * Math.pow(1000, 2-unit);
     }
     
-    public int getUnit(){
+    public int getUnit()
+    {
         return unit;
     }
     
-    public float getCompatabilityExponent(){
+    public float getCompatabilityExponent()
+    {
         return compatabilityExponent;
     }
     
-    public boolean isCombinable(){
+    public boolean isCombinable()
+    {
         return compatabilityExponent > 0;
     }
 
-            
 }

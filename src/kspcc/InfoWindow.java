@@ -3,7 +3,8 @@ package kspcc;
 import javax.swing.*;
 import java.awt.*;
 
-public class InfoWindow {
+public class InfoWindow
+{
 
     public JFrame HELPWINDOW = new JFrame("Info");
 
@@ -14,7 +15,8 @@ public class InfoWindow {
     public static final ImageIcon helpWhite = new ImageIcon(KSPCC.class.getResource("resources/helpIconWhite.png"));
     public static final ImageIcon helpBlack = new ImageIcon(KSPCC.class.getResource("resources/helpIconBlack.png"));
 
-    public InfoWindow(BG master){
+    public InfoWindow(BG master)
+    {
 
         this.master = master;
 
@@ -70,14 +72,18 @@ public class InfoWindow {
         HELPWINDOW.setLocation(560, 140);
     }
 
-    public void updateColors(){
-        if (HELPWINDOW.getIconImage() == helpWhite.getImage()){
+    public void updateColors()
+    {
+        if (HELPWINDOW.getIconImage() == helpWhite.getImage())
+        {
             System.out.println("esdrtfzuhiujuhzt7ftgvbh");
             HELPWINDOW.setIconImage(helpBlack.getImage());
-        } else {
+        } else
+        {
             HELPWINDOW.setIconImage(helpWhite.getImage());
         }
-        for (int i = 0; i < holder.getComponentCount(); i++){
+        for (int i = 0; i < holder.getComponentCount(); i++)
+        {
             holder.getComponent(i).setForeground(master.FONTCOLOR);
             holder.getComponent(i).setBackground(master.BGCOLOR);
         }

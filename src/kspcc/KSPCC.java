@@ -1,4 +1,5 @@
 package kspcc;
+package kspcc.resources;
 
 import java.awt.*;
 import javax.swing.*;
@@ -6,13 +7,15 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class KSPCC {
+public class KSPCC
+{
     
     public JFrame f;
     private CloseConfirmWindow ccw;
     public boolean confirmOpen = false;
 
-    public void init(){
+    public void init()
+    {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         java.net.URL feesh = KSPCC.class.getResource("resources/radarSmallWhite.png");
         ImageIcon feeshIcon = new ImageIcon(feesh);
@@ -36,8 +39,10 @@ public class KSPCC {
         KeyMaster.init();
         Timer loop = new Timer();
         loop.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                if(KeyMaster.isEscPressed() && !confirmOpen){
+            public void run()
+            {
+                if(KeyMaster.isEscPressed() && !confirmOpen)
+                {
                     ccw.open();
                 }
             }
@@ -45,7 +50,8 @@ public class KSPCC {
         }, 0, 16);
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         KSPCC k = new KSPCC();
         k.init();
     }

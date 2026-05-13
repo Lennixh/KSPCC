@@ -3,16 +3,18 @@ package kspcc;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-class CloseConfirmWindow extends JFrame {
-
+class CloseConfirmWindow extends JFrame
+{
     private KSPCC master;
 
-    public CloseConfirmWindow(KSPCC daddy, BG bg) {
-
+    public CloseConfirmWindow(KSPCC daddy, BG bg)
+    {
         master = daddy;
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+        addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
                 master.confirmOpen = false;
                 close();
             }
@@ -36,7 +38,8 @@ class CloseConfirmWindow extends JFrame {
         closeButton.setBackground(bg.BGCOLOR);
         closeButton.setForeground(bg.FONTCOLOR);
         closeButton.setFont(bg.GLOBALFONT.deriveFont(Font.BOLD, 16f));
-        closeButton.addActionListener(e -> {
+        closeButton.addActionListener(e ->
+        {
             daddy.f.dispose();
             dispose();
         });
@@ -48,12 +51,14 @@ class CloseConfirmWindow extends JFrame {
         setLocation(860, 440);
     }
 
-    public void open() {
+    public void open()
+    {
         setVisible(true);
         master.confirmOpen = true;
     }
 
-    public void close() {
+    public void close()
+    {
         setVisible(false);
         master.confirmOpen = false;
     }
