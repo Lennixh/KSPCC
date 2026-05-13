@@ -38,7 +38,8 @@ public class InfoWindow extends JFrame
 
         c.gridy = 1;
         JTextArea uh = new JTextArea();
-        uh.setText( "You can click the moon/sun icon in the top left of the main window to switch between\n" +
+        uh.setText( "TO EXIT KSPCC, PRESS THE ESCAPE KEY AND CLICK CONFIRM ON THE POP UP WINDOW!!!!\n\n" +
+                    "You can click the moon/sun icon in the top left of the main window to switch between\n" +
                     "light and dark mode.\n\n" +
                     "The gear icon in the top right allows you to change some settings, including which\n" +
                     "bodies you can choose from, and the colors of the orbital lines.\n\n" +
