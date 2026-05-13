@@ -69,6 +69,9 @@ public class BG extends JPanel{
     public void init(JFrame f){
         
         this.f = f;
+
+
+        JPanel panel = new JPanel();
         
         units.add("Tm");
         units.add("Gm");
