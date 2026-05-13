@@ -11,7 +11,7 @@ import javax.swing.*;
 public class BG extends JPanel
 {
     
-    private JFrame f;
+    public JFrame f;
     
     public final Font GLOBALFONT = new Font("Sans Serif", Font.PLAIN, 10);
     public Color BGCOLOR = Color.BLACK;
@@ -67,10 +67,10 @@ public class BG extends JPanel
     public boolean creatorOpen = false;
     public boolean darkMode = true;
     
-    public void init(JFrame f)
+    public void init(KSPCC master)
     {
         
-        this.f = f;
+        this.f = master.frame;
 
         JPanel panel = new JPanel();
         
@@ -253,7 +253,7 @@ public class BG extends JPanel
         c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
         av1 = new AntennaVisualizer();
-        av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, this);
+        av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, master);
         add(av1,c);
         
         c = new GridBagConstraints();
@@ -263,7 +263,7 @@ public class BG extends JPanel
         c.anchor = GridBagConstraints.PAGE_END;
         c.insets = new Insets(0,0,30,0);
         av2 = new AntennaVisualizer();
-        av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, this);
+        av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, master);
         add(av2,c);
 
         //Custom orbit stuff
@@ -295,17 +295,11 @@ public class BG extends JPanel
         ImageIcon configWhite = new ImageIcon(configWhiteURL);
         ImageIcon configBlack = new ImageIcon(configBlackURL);
         configButton.setIcon(configWhite);
-        cfgWindow = new ConfigWindow(this, configWhite.getImage());
+        cfgWindow = new ConfigWindow(master, configWhite.getImage());
+        master.windowManager.addWindow(cfgWindow);
         configButton.addActionListener(e->
         {
-            configOpen = !configOpen;
-            if (configOpen)
-            {
-                cfgWindow.open();
-            } else
-            {
-                cfgWindow.close();
-            }
+            master.windowManager.toggleWindow(cfgWindow);
         });
         add(configButton, c);
 
@@ -315,11 +309,12 @@ public class BG extends JPanel
         helpButton.setForeground(FONTCOLOR);
         helpButton.setPreferredSize(new Dimension(32,32));
         helpButton.setBorderPainted(false);
-        iw = new InfoWindow(this);
+        iw = new InfoWindow(master);
+        master.windowManager.addWindow(iw);
         helpButton.setIcon(InfoWindow.helpWhite);
         helpButton.addActionListener(e->
         {
-            iw.HELPWINDOW.setVisible(!iw.HELPWINDOW.isVisible());
+            master.windowManager.toggleWindow(iw);
         });
         add(helpButton, c);
 
@@ -344,12 +339,18 @@ public class BG extends JPanel
             {
                 lightDarkButton.setIcon(moonIcon);
                 configButton.setIcon(configWhite);
+                cfgWindow.setIconImage(configWhite.getImage());
+                helpButton.setIcon(InfoWindow.helpWhite);
+                iw.setIconImage(InfoWindow.helpWhite.getImage());
             } else
             {
                 lightDarkButton.setIcon(sunIcon);
                 configButton.setIcon(configBlack);
+                cfgWindow.setIconImage(configBlack.getImage());
+                helpButton.setIcon(InfoWindow.helpBlack);
+                iw.setIconImage(InfoWindow.helpBlack.getImage());
             }
-            updateColors();
+            updateColors(master.windowManager);
         });
         add(lightDarkButton, c);
 
@@ -530,36 +531,18 @@ public class BG extends JPanel
         secondBodyBox.addActionListener(temp2);
     }
     
-    public void updateColors()
+    public void updateColors(WindowManager windowManager)
     {
         Color temp = BGCOLOR;
         BGCOLOR = FONTCOLOR;
         FONTCOLOR = temp;
-        setBackground(BGCOLOR);
-        setForeground(FONTCOLOR);
-        for (int i = 0; i < getComponentCount(); i++)
-        {
-            getComponent(i).setBackground(BGCOLOR);
-            getComponent(i).setForeground(FONTCOLOR);
-        }
-        firstBodyLabel.setForeground(color1);
+        windowManager.updateAllWindowColors(this);
+        oc1.updateColors(color1);
+        oc2.updateColors(color2);
         firstBodyBox.setForeground(color1);
-        secondBodyLabel.setForeground(color2);
+        firstBodyLabel.setForeground(color1);
         secondBodyBox.setForeground(color2);
-        output.updateColors();
-        av1.updateColors();
-        av2.updateColors();
-        oc1.updateColors();
-        oc2.updateColors();
-        cfgWindow.updateColors();
-        iw.updateColors();
-        if (darkMode)
-        {
-            helpButton.setIcon(InfoWindow.helpWhite);
-        } else
-        {
-            helpButton.setIcon(InfoWindow.helpBlack);
-        }
+        secondBodyLabel.setForeground(color2);
     }
     
     //value in GM

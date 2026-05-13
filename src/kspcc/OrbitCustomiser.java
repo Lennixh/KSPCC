@@ -265,11 +265,10 @@ public class OrbitCustomiser extends JPanel{
         }
     }
 
-    public void updateColors() {
+    public void updateColors(Color c) {
         for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(master.BGCOLOR);
+            getComponent(i).setForeground(c);
         }
-
     }
     
     private Body getBodyFromFile(Scanner sc, Body b) {

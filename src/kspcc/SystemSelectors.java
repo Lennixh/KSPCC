@@ -91,11 +91,4 @@ public class SystemSelectors extends JPanel implements ItemListener{
         master.updateList();
     }
     
-    public void updateColors(){
-        for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(master.BGCOLOR);
-            getComponent(i).setForeground(master.FONTCOLOR);
-        }
-    }
-    
 }

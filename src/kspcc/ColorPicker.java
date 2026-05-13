@@ -93,13 +93,6 @@ public class ColorPicker extends JPanel{
         colorLabel.setFont(master.GLOBALFONT.deriveFont(Font.BOLD, 16f));
     }
     
-    public void updateColorMode(){
-        for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(getParent().getBackground());
-            getComponent(i).setForeground(getParent().getForeground());
-        }
-    }
-    
     private void updateColors(BG master, String place){
         if (place.equals("First Orbit")) {
             master.color1 = color;

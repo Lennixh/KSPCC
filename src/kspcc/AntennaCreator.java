@@ -6,12 +6,10 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class AntennaCreator
+public class AntennaCreator extends JFrame
 {
     
-    private JFrame creatorWindow;
-    
-    private BG master;
+    private BG bg;
     
     private JPanel elementContainer;
     
@@ -19,7 +17,7 @@ public class AntennaCreator
     private int screenHeight;
 
     
-    public AntennaCreator(BG master, AntennaVisualizer av)
+    public AntennaCreator(KSPCC master, AntennaVisualizer av)
     {
         
         ArrayList<String> units = new ArrayList<>();
@@ -40,24 +38,23 @@ public class AntennaCreator
         floatFormat.setMaximumFractionDigits(10);
         floatFormat.setMaximumIntegerDigits(1);
         
-        this.master = master;
+        this.bg = master.bg;
         
-        creatorWindow = new JFrame("Antenna Creator");
-        creatorWindow.setAlwaysOnTop(true);
-        creatorWindow.setPreferredSize(new Dimension(512,256));
-        creatorWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        creatorWindow.addWindowListener(new WindowAdapter()
+        setTitle("Antenna Creator");
+        setAlwaysOnTop(true);
+        setPreferredSize(new Dimension(512,256));
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
             {
-                master.creatorOpen = false;
-                close();
+                close(master.windowManager);
             }
         });
         
         elementContainer = new JPanel();
         elementContainer.setLayout(new GridBagLayout());
-        elementContainer.setBackground(master.BGCOLOR);
+        elementContainer.setBackground(bg.BGCOLOR);
         
         
         GridBagConstraints c = new GridBagConstraints();
@@ -79,8 +76,8 @@ public class AntennaCreator
         JTextField nameField = new JTextField();
         nameField.setText("Antenna");
         nameField.setColumns(10);
-        nameField.setCaretColor(master.FONTCOLOR);
-        nameField.setSelectionColor(master.FONTCOLOR);
+        nameField.setCaretColor(bg.FONTCOLOR);
+        nameField.setSelectionColor(bg.FONTCOLOR);
         elementContainer.add(nameField, c);
 
         c.gridy = 1;
@@ -88,8 +85,8 @@ public class AntennaCreator
         JFormattedTextField rangeField = new JFormattedTextField(doubleFormat);
         rangeField.setValue(1.0d);
         rangeField.setColumns(10);
-        rangeField.setCaretColor(master.FONTCOLOR);
-        rangeField.setSelectionColor(master.FONTCOLOR);
+        rangeField.setCaretColor(bg.FONTCOLOR);
+        rangeField.setSelectionColor(bg.FONTCOLOR);
         elementContainer.add(rangeField, c);
         
         c.gridx = 2;
@@ -102,8 +99,8 @@ public class AntennaCreator
         JFormattedTextField ceField = new JFormattedTextField(floatFormat);
         ceField.setValue(0.75f);
         ceField.setColumns(10);
-        ceField.setCaretColor(master.FONTCOLOR);
-        ceField.setSelectionColor(master.FONTCOLOR);
+        ceField.setCaretColor(bg.FONTCOLOR);
+        ceField.setSelectionColor(bg.FONTCOLOR);
         ceField.setToolTipText("Almost all antennae use 0.75");
         elementContainer.add(ceField, c);
         
@@ -113,7 +110,8 @@ public class AntennaCreator
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e->
         {
-            close();
+            close(master.windowManager);
+
             av.antennae.add(new Antenna(nameField.getText(), (double)rangeField.getValue(), unit.getSelectedIndex(), (float)ceField.getValue(), Antenna.DIRECT));
             av.selectorStrings.add(av.antennae.size()-1, av.antennae.get(av.antennae.size()-1).getName());
             av.antennaSelectorBox.removeAllItems();
@@ -130,30 +128,28 @@ public class AntennaCreator
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e->
         {
-            close();
+            close(master.windowManager);
         });
         elementContainer.add(cancelButton, c);
         
         for (int i = 0; i < elementContainer.getComponentCount(); i++)
         {
-            elementContainer.getComponent(i).setBackground(master.BGCOLOR);
-            elementContainer.getComponent(i).setForeground(master.FONTCOLOR);
-            elementContainer.getComponent(i).setFont(master.GLOBALFONT.deriveFont(16f));
+            elementContainer.getComponent(i).setBackground(bg.BGCOLOR);
+            elementContainer.getComponent(i).setForeground(bg.FONTCOLOR);
+            elementContainer.getComponent(i).setFont(bg.GLOBALFONT.deriveFont(16f));
         }
         
-        creatorWindow.add(elementContainer);
-        creatorWindow.pack();
+        add(elementContainer);
+        pack();
     }
         
-    public void open()
+    public void open(WindowManager windowManager)
     {
-        creatorWindow.setVisible(true);
-        master.creatorOpen = true;
+        windowManager.openWindow(this);
     }
     
-    public void close()
+    public void close(WindowManager windowManager)
     {
-        creatorWindow.setVisible(false);
-        master.creatorOpen = false;
+        windowManager.closeWindow(this);
     }
 }

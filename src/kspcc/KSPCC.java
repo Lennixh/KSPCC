@@ -1,5 +1,4 @@
 package kspcc;
-package kspcc.resources;
 
 import java.awt.*;
 import javax.swing.*;
@@ -9,42 +8,57 @@ import java.util.TimerTask;
 
 public class KSPCC
 {
-    
-    public JFrame f;
+    public WindowManager windowManager;
+
+    public JFrame frame;
+
+    public BG bg;
+
     private CloseConfirmWindow ccw;
-    public boolean confirmOpen = false;
 
-    public void init()
+    public KSPCC()
     {
+        windowManager = new WindowManager();
+
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        java.net.URL feesh = KSPCC.class.getResource("resources/radarSmallWhite.png");
-        ImageIcon feeshIcon = new ImageIcon(feesh);
-        f = new JFrame("KSPCC");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setPreferredSize(d);
-        f.setUndecorated(true);
 
-        f.setIconImage(feeshIcon.getImage());
-        BG bg = new BG();
-        bg.init(f);
-        f.add(bg, BorderLayout.CENTER);
+        java.net.URL mainWindowIcon = KSPCC.class.getResource("resources/radarSmallWhite.png");
+        ImageIcon feeshIcon = new ImageIcon(mainWindowIcon);
 
-        f.pack();
-  
-        f.setVisible(true);
-        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame = new JFrame("KSPCC");
+        frame.setIconImage(feeshIcon.getImage());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(d);
+        frame.setUndecorated(true);
+
+
+        bg = new BG();
+        bg.init(this);
+        frame.add(bg, BorderLayout.CENTER);
+
+        frame.pack();
+
+        windowManager.addWindow(frame);
+
+        windowManager.openWindow(frame);
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         ccw = new CloseConfirmWindow(this, bg);
+
+        windowManager.addWindow(ccw);
 
         KeyMaster.init();
         Timer loop = new Timer();
         loop.scheduleAtFixedRate(new TimerTask() {
             public void run()
             {
-                if(KeyMaster.isEscPressed() && !confirmOpen)
+                if(KeyMaster.isEscPressed() && !windowManager.isWindowOpen(ccw))
                 {
-                    ccw.open();
+                    windowManager.openWindow(ccw);
                 }
+                ccw.setState(JFrame.NORMAL);
+                ccw.setAlwaysOnTop(true);
             }
 
         }, 0, 16);
@@ -53,7 +67,6 @@ public class KSPCC
     public static void main(String[] args)
     {
         KSPCC k = new KSPCC();
-        k.init();
     }
     
 }

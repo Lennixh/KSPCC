@@ -48,15 +48,11 @@ class Output extends JPanel{
             p.setFont(master.GLOBALFONT.deriveFont(Font.BOLD, 16f));
         }
     }
-    public JLabel getLabel(int ind){
+    public JLabel getLabel(int ind)
+    {
         return (JLabel) getComponent(ind);
     }
-    public void updateColors(){
-        for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setBackground(master.BGCOLOR);
-            getComponent(i).setForeground(master.FONTCOLOR);
-        }
-    }
+
 }
 
 
