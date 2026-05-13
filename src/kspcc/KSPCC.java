@@ -45,8 +45,8 @@ public class KSPCC
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         ccw = new CloseConfirmWindow(this, bg);
-
         windowManager.addWindow(ccw);
+        ccw.setAlwaysOnTop(true);
 
         KeyMaster.init();
         Timer loop = new Timer();
@@ -58,7 +58,6 @@ public class KSPCC
                     windowManager.openWindow(ccw);
                 }
                 ccw.setState(JFrame.NORMAL);
-                ccw.setAlwaysOnTop(true);
             }
 
         }, 0, 16);

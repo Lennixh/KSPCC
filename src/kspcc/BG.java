@@ -296,6 +296,7 @@ public class BG extends JPanel
         ImageIcon configBlack = new ImageIcon(configBlackURL);
         configButton.setIcon(configWhite);
         cfgWindow = new ConfigWindow(master, configWhite.getImage());
+        cfgWindow.setAlwaysOnTop(true);
         master.windowManager.addWindow(cfgWindow);
         configButton.addActionListener(e->
         {
@@ -310,6 +311,7 @@ public class BG extends JPanel
         helpButton.setPreferredSize(new Dimension(32,32));
         helpButton.setBorderPainted(false);
         iw = new InfoWindow(master);
+        iw.setAlwaysOnTop(true);
         master.windowManager.addWindow(iw);
         helpButton.setIcon(InfoWindow.helpWhite);
         helpButton.addActionListener(e->

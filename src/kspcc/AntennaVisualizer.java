@@ -29,6 +29,7 @@ public class AntennaVisualizer extends JPanel
 
         ac = new AntennaCreator(master, this);
         master.windowManager.addWindow(ac);
+        ac.setAlwaysOnTop(true);
         
         setLayout(new GridBagLayout());
         setBackground(bg.BGCOLOR);

@@ -25,10 +25,11 @@ class WindowManager
     public void openWindow(JFrame window)
     {
         window.setVisible(true);
+        window.setState(Frame.NORMAL);
         openMask.set(windowList.indexOf(window), true);
     }
 
-    public void  closeWindow(JFrame window)
+    public void closeWindow(JFrame window)
     {
         window.setVisible(false);
         openMask.set(windowList.indexOf(window), false);
@@ -36,13 +37,19 @@ class WindowManager
 
     public void toggleWindow(JFrame window)
     {
-        window.setVisible(!window.isVisible());
-        openMask.set(windowList.indexOf(window), window.isVisible());
+        if (window.isVisible() && window.getState() == Frame.NORMAL)
+        {
+            closeWindow(window);
+        }else
+        {
+            openWindow(window);
+        }
     }
 
     public void openWindow(int index)
     {
         windowList.get(index).setVisible(true);
+        windowList.get(index).setState(Frame.NORMAL);
         openMask.set(index, true);
     }
 
@@ -54,8 +61,13 @@ class WindowManager
 
     public void toggleWindow(int index)
     {
-        windowList.get(index).setVisible(!windowList.get(index).isVisible());
-        openMask.set(index, windowList.get(index).isVisible());
+        if (windowList.get(index).isVisible() && windowList.get(index).getState() == Frame.NORMAL)
+        {
+            closeWindow(index);
+        } else
+        {
+            openWindow(index);
+        }
     }
 
     public boolean isWindowOpen(JFrame window)
