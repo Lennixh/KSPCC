@@ -4,6 +4,8 @@ Kerbal Space Programm Communications Calculator is a small portable programm, th
 
 ## **How to use**
 
+You can exit KSPCC by pressing the ESCAPE key, and clicking "Confirm" on the window that pops up.
+
 You can either two prefab orbits from the dropdown selector, or input custom orbital parameters and use those. You can also input a custom orbit by selecting a Kopernicus cfg file.  
 The reference body is the body around which ther selectable orbits are located.
 Currently implemented prefab Systems are OPM, MPE, and the RSS config of Sol.
