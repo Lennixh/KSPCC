@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 public class AntennaVisualizer extends JPanel
 {
-
-    private MainWindow f;
-    private BG bg;
     public ArrayList<Antenna> antennae;
     public ArrayList<String> selectorStrings;
     private ArrayList<String> units;
@@ -19,21 +16,18 @@ public class AntennaVisualizer extends JPanel
     
     public JComboBox antennaSelectorBox;
     
-    private AntennaCreator ac;
-    
-    public void init(Font font, MainWindow f, KSPCC master)
-    {
-        
-        this.f = f;
-        this.bg = master.bg;
+    public AntennaCreator ac;
 
-        ac = new AntennaCreator(master, this);
+    public AntennaVisualizer(KSPCC master, Color bgColor, Color fgColor, Font font)
+    {
+
+        ac = new AntennaCreator(master, this, bgColor, fgColor, font);
         master.windowManager.addWindow(ac);
         ac.setAlwaysOnTop(true);
-        
+
         setLayout(new GridBagLayout());
-        setBackground(bg.BGCOLOR);
-        setForeground(bg.FONTCOLOR);
+        setBackground(bgColor);
+        setForeground(fgColor);
 
         units = new ArrayList<>();
         units.add("Tm");
@@ -41,9 +35,9 @@ public class AntennaVisualizer extends JPanel
         units.add("Mm");
         units.add("Km");
         units.add("m");
-        
+
         vesselAntennae = new ArrayList<>();
-        
+
         antennae = new ArrayList<>();
         antennae.add(new Antenna("Communotron 16", 500, 3, 1.0f, Antenna.DIRECT));
         antennae.add(new Antenna("Communotron 16-S", 500, 3, 0.0f, Antenna.DIRECT));
@@ -57,18 +51,18 @@ public class AntennaVisualizer extends JPanel
         antennae.add(new Antenna("Level 1 TS", 2, 1, 0.75f, Antenna.RELAY));
         antennae.add(new Antenna("Level 2 TS", 50, 1, 0.75f, Antenna.RELAY));
         antennae.add(new Antenna("Level 3 TS", 250, 1, 0.75f, Antenna.RELAY));
-        
-        
+
+
         selectorStrings = new ArrayList<>();
         for (Antenna a : antennae) {
             selectorStrings.add(a.getName());
         }
         selectorStrings.add("Custom");
         selectorStrings.add("Select one");
-        
+
         antennaSelectorBox = new JComboBox(selectorStrings.toArray());
-        antennaSelectorBox.setBackground(bg.BGCOLOR);
-        antennaSelectorBox.setForeground(bg.FONTCOLOR);
+        antennaSelectorBox.setBackground(bgColor);
+        antennaSelectorBox.setForeground(fgColor);
         antennaSelectorBox.setFont(font);
         antennaSelectorBox.setToolTipText("Click antennae to remove them");
         antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
@@ -79,27 +73,26 @@ public class AntennaVisualizer extends JPanel
                 vesselAntennae.add(antennae.get(antennaSelectorBox.getSelectedIndex()));
                 JButton anntennaHandler = new JButton(vesselAntennae.get(vesselAntennae.size()-1).getName());
                 anntennaHandler.setFont(font);
-                anntennaHandler.setBackground(bg.BGCOLOR);
-                anntennaHandler.setForeground(bg.FONTCOLOR);
-                
+                anntennaHandler.setBackground(master.bg.BGCOLOR);
+                anntennaHandler.setForeground(master.bg.FONTCOLOR);
+
                 anntennaHandler.addActionListener(ex ->
                 {
                     int ind = displayer.getComponentCount()-1;
                     vesselAntennae.remove(ind);
                     displayer.remove(anntennaHandler);
                     revalidate();
-                    f.repaint();
-                    bg.updateLabels();
+                    master.mainWindow.repaint();
+                    master.bg.updateLabels();
                 });
-                
+
                 revalidate();
-                f.repaint();
+                master.mainWindow.repaint();
                 GridBagConstraints c = new GridBagConstraints();
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.gridy = displayer.getComponentCount();
                 displayer.add(anntennaHandler, c);
-                
-                bg.updateLabels();
+                master.bg.updateLabels();
             }
             if (antennaSelectorBox.getSelectedIndex() == antennaSelectorBox.getItemCount()-2)
             {
@@ -107,26 +100,14 @@ public class AntennaVisualizer extends JPanel
             }
             antennaSelectorBox.setSelectedIndex(antennaSelectorBox.getItemCount()-1);
         });
-        
+
         GridBagConstraints c = new GridBagConstraints();
         displayer = new JPanel();
         displayer.setLayout(new GridBagLayout());
-        displayer.setBackground(bg.BGCOLOR);
+        displayer.setBackground(bgColor);
         add(displayer, c);
         c.gridy = 1;
         add(antennaSelectorBox, c);
-    }
-    
-    public void updateColors() {
-        for (int i = 0; i < displayer.getComponentCount(); i++)
-        {
-            displayer.getComponent(i).setBackground(bg.BGCOLOR);
-            displayer.getComponent(i).setForeground(bg.FONTCOLOR);
-        }
-        displayer.setBackground(bg.BGCOLOR);
-        displayer.setForeground(bg.FONTCOLOR);
-        antennaSelectorBox.setBackground(bg.BGCOLOR);
-        antennaSelectorBox.setForeground(bg.FONTCOLOR);
     }
 
     private double getMaxPow()

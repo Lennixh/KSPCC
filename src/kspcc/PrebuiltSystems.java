@@ -1,7 +1,8 @@
 package kspcc;
 
 
-public class PrebuiltSystems {
+public class PrebuiltSystems
+{
     
     public static final Body Sun = new Body("Sun", 0, 0, 0, 0, 0, null);
     
@@ -22,22 +23,24 @@ public class PrebuiltSystems {
     private static final Body Pol    = new Body("Pol",     0.179890000, 0.171f,  4.25,    2.0,  15.0, Jool);
     private static final Body Eeloo  = new Body("Eeloo",  90.118820000, 0.260f,  6.15,   50.0, 260.0, Sun);
     
-    public static Body[] vanillaBodies = {  Moho, 
-                                            Eve, 
-                                                Gilly, 
-                                            Kerbin, 
-                                                Mun, 
-                                                Minmus, 
-                                            Duna, 
-                                                Ike, 
-                                            Dres, 
-                                            Jool, 
-                                                Laythe, 
-                                                Vall, 
-                                                Tylo, 
-                                                Bop, 
-                                                Pol, 
-                                            Eeloo       };
+    public static Body[] vanillaBodies =
+    {   Moho,
+        Eve,
+            Gilly,
+        Kerbin,
+            Mun,
+            Minmus,
+        Duna,
+            Ike,
+        Dres,
+        Jool,
+            Laythe,
+            Vall,
+            Tylo,
+            Bop,
+            Pol,
+        Eeloo
+    };
     
     private static final Body Sarnus = new Body("Sarnus", 125.798522368, 0.0534f,        2.02, 184.0,   0.0, Sun);
     private static final Body Hale   = new Body("Hale",     0.010488231, 0.0f,           1.00,  55.0,   0.0, Sarnus);
@@ -56,22 +59,24 @@ public class PrebuiltSystems {
     private static final Body Plock  = new Body("Plock",  535.833706086, 0.26f,          6.15, 260.0,  50.0, Sun);
     private static final Body Karen  = new Body("Karen",    0.002457800, 0.0f,           0.0,  260.0,  50.0, Plock);
     
-    public static Body[] OPMBodies = {  Sarnus, 
-                                            Hale, 
-                                            Ovok, 
-                                            Eeloo2, 
-                                            Slate, 
-                                            Tekto, 
-                                        Urlum, 
-                                            Tal, 
-                                            Polta, 
-                                            Priax, 
-                                            Wal, 
-                                        Neidon, 
-                                            Thatmo, 
-                                            Nissee, 
-                                        Plock, 
-                                            Karen};
+    public static Body[] OPMBodies =
+    {   Sarnus,
+            Hale,
+            Ovok,
+            Eeloo2,
+            Slate,
+            Tekto,
+        Urlum,
+            Tal,
+            Polta,
+            Priax,
+            Wal,
+        Neidon,
+            Thatmo,
+            Nissee,
+        Plock,
+            Karen
+    };
     
     private static final Body Mercury   = new Body("Mercury",     57.90908185997428,     0.2056264110797241f,     28.552245205587443,   11.00389273075962,     67.47422409882562,     Sun);
     private static final Body Venus     = new Body("Venus",      108.20860704627557,     0.006783584260519895f,   24.43313318920893,     8.015191876420234,    123.8986906325162,     Sun);
@@ -124,55 +129,56 @@ public class PrebuiltSystems {
     private static final Body Hydra     = new Body("Hydra",        0.06518175190750335,  0.008565292831581688f,   96.2461719792817,     222.7572796137852,      73.12613265975267,    Pluto);
     private static final Body Arrokoth  = new Body("Arrokoth",  6627.381459600103,       0.038855478225981094f,   21.168584656733213,     2.407701427527428,   346.4287365705793,     Sun);
     
-    public static Body[] solBodies = {  Mercury, 
-                                        Venus, 
-                                        Earth, 
-                                            Moon, 
-                                        Ryugu, 
-                                        Mars, 
-                                            Phobos, 
-                                            Deimos, 
-                                        Vesta, 
-                                        Ceres, 
-                                        Pallas, 
-                                        Ida, 
-                                            Dactyl, 
-                                        Psyche, 
-                                        Jupiter, 
-                                            Amalthea, 
-                                            Thebe, 
-                                            Io, 
-                                            Europa, 
-                                            Ganymede, 
-                                            Callisto, 
-                                        Saturn, 
-                                            Mimas, 
-                                            Enceladus, 
-                                            Tethys, 
-                                            Dione, 
-                                            Rhea, 
-                                            Titan, 
-                                            Hyperion, 
-                                            Iapetus, 
-                                            Phoebe, 
-                                        Uranus, 
-                                            Puck, 
-                                            Miranda, 
-                                            Ariel, 
-                                            Umbriel, 
-                                            Titania, 
-                                            Oberon, 
-                                        Neptune, 
-                                            Proteus, 
-                                            Triton, 
-                                            Neired, 
-                                        Pluto, 
-                                            Charon, 
-                                            Styx, 
-                                            Nix, 
-                                            Kerberos, 
-                                            Hydra, 
-                                        Arrokoth};
+    public static Body[] solBodies =
+    {   Mercury,
+        Venus,
+        Earth,
+            Moon,
+        Ryugu,
+        Mars,
+            Phobos,
+            Deimos,
+        Vesta,
+        Ceres,
+        Pallas,
+        Ida,
+            Dactyl,
+        Psyche,
+        Jupiter,
+            Amalthea,
+            Thebe,
+            Io,
+            Europa,
+            Ganymede,
+            Callisto,
+        Saturn,
+            Mimas,
+            Enceladus,
+            Tethys,
+            Dione,
+            Rhea,
+            Titan,
+            Hyperion,
+            Iapetus,
+            Phoebe,
+        Uranus,
+            Puck,
+            Miranda,
+            Ariel,
+            Umbriel,
+            Titania,
+            Oberon,
+        Neptune,
+            Proteus,
+            Triton,
+            Neired,
+        Pluto,
+            Charon,
+            Styx,
+            Nix,
+            Kerberos,
+            Hydra,
+        Arrokoth};
     
     //MPE
     private static final Body Edas      = new Body("Edas",       21.809870000,   0.2226f,   10.828,   304.32,    178.82,    Sun);
@@ -191,21 +197,21 @@ public class PrebuiltSystems {
     private static final Body Soden     = new Body("Soden",    1209.633200, 0.84123f,  11.929,   144.32,    311.53,    Sun);
     private static final Body Lon       = new Body("Lon",         0.001462950,   0.2f,       9.8,     124.0,       7.0,     Soden);
     
-    public static Body[] MPEBodies = {  Edas, 
-                                        Vant, 
-                                        Zore, 
-                                        LintMikey, 
-                                        Crokslev, 
-                                        Mracksis, 
-                                            Flake, 
-                                        Havous, 
-                                            Kal, 
-                                            KiKi, 
-                                        Geito, 
-                                        Ervo, 
-                                            Archae, 
-                                        Soden, 
-                                            Lon};
-    
-    
+    public static Body[] MPEBodies =
+    {   Edas,
+        Vant,
+        Zore,
+        LintMikey,
+        Crokslev,
+        Mracksis,
+            Flake,
+        Havous,
+            Kal,
+            KiKi,
+        Geito,
+        Ervo,
+            Archae,
+        Soden,
+            Lon
+    };
 }

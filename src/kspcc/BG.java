@@ -223,25 +223,23 @@ public class BG extends JPanel
         add(secondBodyBox, c);
 
         //the orbital display
-        dp = new OrbitVisualizer();
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 3;
         c.weighty = 1f;
-        dp.init(new Dimension(480,480), tBody1, tBody2, this);
+        dp = new OrbitVisualizer(new Dimension(480,480), tBody1, tBody2, this);
         dp.setBackground(BGCOLOR);
         dp.setForeground(FONTCOLOR);
         add(dp,c);
 
         //The Output
-        output = new Output();
-        output.init(this);
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 4;
         c.weighty = 0.0;
         c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
+        output = new Output(this);
         add(output, c);
 
         //The Antenna selection stuff
@@ -251,8 +249,7 @@ public class BG extends JPanel
         c.gridheight = 2;
         c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
-        av1 = new AntennaVisualizer();
-        av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, master);
+        av1 = new AntennaVisualizer(master, BGCOLOR, FONTCOLOR, GLOBALFONT.deriveFont(Font.PLAIN, 12f));
         add(av1,c);
 
         c = new GridBagConstraints();
@@ -261,23 +258,20 @@ public class BG extends JPanel
         c.gridheight = 2;
         c.anchor = GridBagConstraints.PAGE_END;
         c.insets = new Insets(0,0,30,0);
-        av2 = new AntennaVisualizer();
-        av2.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, master);
+        av2 = new AntennaVisualizer(master, BGCOLOR, FONTCOLOR, GLOBALFONT.deriveFont(Font.PLAIN, 12f));
         add(av2,c);
 
         //Custom orbit stuff
         c = new GridBagConstraints();
         c.gridx = 1;
         c.gridy = 3;
-        oc1 = new OrbitCustomiser();
-        oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color1, this, true);
+        oc1 = new OrbitCustomiser(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color1, this, true);
         add(oc1,c);
 
         c = new GridBagConstraints();
         c.gridx = 3;
         c.gridy = 3;
-        oc2 = new OrbitCustomiser();
-        oc2.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color2, this, false);
+        oc2 = new OrbitCustomiser(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color2, this, false);
         add(oc2, c);
 
         c = new GridBagConstraints();
@@ -544,6 +538,8 @@ public class BG extends JPanel
         firstBodyLabel.setForeground(color1);
         secondBodyBox.setForeground(color2);
         secondBodyLabel.setForeground(color2);
+        av1.ac.updateCaret(FONTCOLOR);
+        av2.ac.updateCaret(FONTCOLOR);
     }
     
     //value in GM

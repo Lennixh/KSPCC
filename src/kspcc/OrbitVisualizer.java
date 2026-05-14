@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public class OrbitVisualizer extends JPanel {
-
+public class OrbitVisualizer extends JPanel
+{
     private BG master;
     
     private Dimension d;
@@ -18,8 +18,9 @@ public class OrbitVisualizer extends JPanel {
     public ArrayList<Body> orbits;
     public ArrayList<Polygon> orbitShapes;
     public ArrayList<Color> orbitColors;
-    
-    public void init(Dimension d, Body b1, Body b2, BG master){
+
+    public OrbitVisualizer(Dimension d, Body b1, Body b2, BG master)
+    {
         this.master = master;
         this.d = d;
         this.setPreferredSize(d);
@@ -39,7 +40,8 @@ public class OrbitVisualizer extends JPanel {
         units.add("m");
     }
     
-    public void paint(Graphics g) {
+    public void paint(Graphics g)
+    {
         
 
         orbitShapes.clear();
@@ -49,14 +51,17 @@ public class OrbitVisualizer extends JPanel {
         
         scale = Math.min(0.5d/(orbits.get(0).getSMA()), 0.5d/(orbits.get(1).getSMA()));
         
-        if (orbits.get(0).getParent() == orbits.get(1)) {
+        if (orbits.get(0).getParent() == orbits.get(1))
+        {
             scale = 0.5d/orbits.get(0).getSMA();
         } 
-        if (orbits.get(1).getParent() == orbits.get(0)){
+        if (orbits.get(1).getParent() == orbits.get(0))
+        {
             scale = 0.5d/orbits.get(1).getSMA();
         }
 
-        for (Body b : orbits) {
+        for (Body b : orbits)
+        {
             generateEllipse(b.getSMA(), b.getSMB(), Math.toRadians(b.getAoP()), Math.toRadians(b.getLoA()), Math.toRadians(b.getInc()));
         }
         
@@ -65,20 +70,21 @@ public class OrbitVisualizer extends JPanel {
         g.setColor(Color.GRAY);
         g.drawLine(d.width/2, 0, d.width/2, d.height);
         g.drawLine(0,d.height/2, d.width, d.height/2);
-        System.out.println("Body 1: "+orbits.get(0).getName());
-        System.out.println("Body 2: "+orbits.get(1).getName());
-        for (int i = 0; i < orbitShapes.size(); i++) {
+        for (int i = 0; i < orbitShapes.size(); i++)
+        {
             g.setColor(orbitColors.get(i));
             g.drawPolygon(orbitShapes.get(i));
         }
     }
     
-    public void addOrbit(Body b){
+    public void addOrbit(Body b)
+    {
         orbits.add(b);
     }
     
 
-    public void generateEllipse(double a, double b, double AoP, double LoA, double inc){
+    public void generateEllipse(double a, double b, double AoP, double LoA, double inc)
+    {
         
         a=0.5d*a*d.width*scale;
         b=0.5d*b*d.width*scale;
@@ -98,7 +104,8 @@ public class OrbitVisualizer extends JPanel {
         double cosT, sinT;
         
         Polygon pNew = new Polygon();
-        for (double i = 0; i < 2*Math.PI; i+=Math.PI/512) {
+        for (double i = 0; i < 2*Math.PI; i+=Math.PI/512)
+        {
             cosT = Math.cos(i);
             sinT = Math.sin(i);
             pNew.addPoint(
@@ -114,7 +121,8 @@ public class OrbitVisualizer extends JPanel {
         orbitShapes.add(pNew);
     }
     
-    public double[] getDists(){ 
+    public double[] getDists()
+    {
         
         final double a0 = orbits.get(0).getSMA();
         final double b0 = orbits.get(0).getSMB();
@@ -153,7 +161,10 @@ public class OrbitVisualizer extends JPanel {
         double minAngle0 = 0;
         double minAngle1 = 0;
 
-        for (double i = 0; i < 2*Math.PI; i+=Math.PI/512) {
+
+        //BIG MATH, should probably put this in a helper function or sth
+        for (double i = 0; i < 2*Math.PI; i+=Math.PI/512)
+        {
             
             cosT0 = Math.cos(i);
             sinT0 = Math.sin(i);
@@ -168,7 +179,8 @@ public class OrbitVisualizer extends JPanel {
             
             z0 = (cosT0*sinAP0*a0+sinT0*cosAP0*b0+sinAP0*c0)*sinInc0;
             
-            for (double j = 0; j < 2*Math.PI; j+=Math.PI/512) {
+            for (double j = 0; j < 2*Math.PI; j+=Math.PI/512)
+            {
                 
                 cosT1 = Math.cos(j);
                 sinT1 = Math.sin(j);

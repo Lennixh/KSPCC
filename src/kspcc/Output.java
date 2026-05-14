@@ -5,7 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public 
-class Output extends JPanel{
+class Output extends JPanel
+{
     
     private BG master;
     
@@ -14,8 +15,9 @@ class Output extends JPanel{
     private JLabel minDistStrengthLabel;
     private JLabel maxDistStrengthLabel;
     private JLabel maxRangeLabel;
-    
-    public void init(BG master){
+
+    public Output(BG master)
+    {
         this.master = master;
         setLayout(new GridBagLayout());
         setBackground(master.BGCOLOR);
@@ -25,7 +27,7 @@ class Output extends JPanel{
         maxDistLabel = new JLabel("Maximum distance: ");
         minDistStrengthLabel = new JLabel("Signal strength at minimum distance: ");
         maxDistStrengthLabel = new JLabel("Signal strength at maximum distance: ");
-        
+
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;
         c.insets = new Insets(0,0,10,0);
@@ -41,13 +43,15 @@ class Output extends JPanel{
         c.weighty = 1.0f;
         c.anchor = GridBagConstraints.PAGE_START;
         add(maxDistStrengthLabel, c);
-        for (int i = 0; i < getComponentCount(); i++) {
+        for (int i = 0; i < getComponentCount(); i++)
+        {
             Component p = getComponent(i);
             p.setBackground(master.BGCOLOR);
             p.setForeground(master.FONTCOLOR);
             p.setFont(master.GLOBALFONT.deriveFont(Font.BOLD, 16f));
         }
     }
+
     public JLabel getLabel(int ind)
     {
         return (JLabel) getComponent(ind);

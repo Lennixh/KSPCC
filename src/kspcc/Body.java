@@ -2,7 +2,8 @@ package kspcc;
 
 import java.util.ArrayList;
 
-public class Body {
+public class Body
+{
     
     private String name;
     private double SMA;
@@ -15,11 +16,13 @@ public class Body {
     
     private Body parent;
     
-    public Body(){
+    public Body()
+    {
         this("",0,0,0,0,0,null);
     }
     
-    public Body(String name, double SMA, float E, double inc, double LoA, double AoP, Body parent){
+    public Body(String name, double SMA, float E, double inc, double LoA, double AoP, Body parent)
+    {
         this.name = name;
         this.SMA = SMA;
         this.E = E;
@@ -31,58 +34,75 @@ public class Body {
         this.parent = parent;
     } 
     
-    public boolean hasParent(){
+    public boolean hasParent()
+    {
         return parent == null;
     }
     
-    public String getName(){
+    public String getName()
+    {
         return name;
     }
-    public double getSMA(){
+    public double getSMA()
+    {
         return SMA;
     }
-    public double getSMB(){
+    public double getSMB()
+    {
         return SMA*Math.sqrt(1-(E*E));
     }
-    public double getAP(){
+    public double getAP()
+    {
         return AP;
     }
-    public double getPE(){
+    public double getPE()
+    {
         return PE;
     }
-    public float getE(){
+    public float getE()
+    {
         return E;
     }
-    public double getAoP(){
+    public double getAoP()
+    {
         return AoP;
     }
-    public double getLoA(){
+    public double getLoA()
+    {
         return LoA;
     }
-    public double getInc(){
+    public double getInc()
+    {
         return inc;
     }
     
-    public Body getParent(){
+    public Body getParent()
+    {
         return parent;
     }
     
-    public void setName(String newName){
+    public void setName(String newName)
+    {
         name = newName;
     }
-    public void setSMA(double val){
+    public void setSMA(double val)
+    {
         SMA = val;
     }
-    public void setE(float val){
+    public void setE(float val)
+    {
         E = val;
     }
-    public void setAoP(double val){
+    public void setAoP(double val)
+    {
         AoP = val;
     }
-    public void setLoA(double val){
+    public void setLoA(double val)
+    {
         LoA = val;
     }
-    public void setInc(double val){
+    public void setInc(double val)
+    {
         inc = val;
     }
 }

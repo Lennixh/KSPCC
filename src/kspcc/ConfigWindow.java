@@ -59,20 +59,17 @@ public class ConfigWindow extends JFrame
         c.insets = new Insets(0,15,20,0);
         c.gridy = 1;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
-        cp1 = new ColorPicker();
-        cp1.init(bg.color1, "First Orbit", bg);
+        cp1 = new ColorPicker(bg.color1, "First Orbit", bg);
         elementContainer.add(cp1, c);
 
         c.gridy = 2;
-        cp2 = new ColorPicker();
-        cp2.init(bg.color2, "Second Orbit", bg);
+        cp2 = new ColorPicker(bg.color2, "Second Orbit", bg);
         elementContainer.add(cp2, c);
 
         c.gridy = 3;
         c.weightx = 1;
         c.weighty = 1;
-        sysS = new SystemSelectors();
-        sysS.init(bg);
+        sysS = new SystemSelectors(bg);
         elementContainer.add(sysS, c);
 	
         JScrollPane scroller = new JScrollPane(elementContainer, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
