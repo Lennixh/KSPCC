@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class AntennaVisualizer extends JPanel
 {
-    
-    private JFrame f;
+
+    private MainWindow f;
     private BG bg;
     public ArrayList<Antenna> antennae;
     public ArrayList<String> selectorStrings;
@@ -21,7 +21,7 @@ public class AntennaVisualizer extends JPanel
     
     private AntennaCreator ac;
     
-    public void init(Font font, JFrame f, KSPCC master)
+    public void init(Font font, MainWindow f, KSPCC master)
     {
         
         this.f = f;
@@ -128,61 +128,6 @@ public class AntennaVisualizer extends JPanel
         antennaSelectorBox.setBackground(bg.BGCOLOR);
         antennaSelectorBox.setForeground(bg.FONTCOLOR);
     }
-    
-    private String fetchUserUnit()
-    {
-        String s = (String) JOptionPane.showInputDialog(f, "Input unit\n(Options: Tm, Gm, Mm, Km, m)", "");
-        if (!units.contains(s))
-        {
-            s = fetchUserUnit();
-        }
-        return s;
-    }
-    
-    private String fetchUserFloatAsString(String message)
-    {
-        String s = (String) JOptionPane.showInputDialog(f, message, "");
-        try
-        {
-            if (s.equals(""))
-            {
-                s = "0.75";
-            }
-            double val = Float.parseFloat(s);
-        } catch (NumberFormatException ex)
-        {
-            s = fetchUserDoubleAsString(message);
-        }
-        return s;
-    }
-    
-    private String fetchUserDoubleAsString(String message)
-    {
-        String s = (String) JOptionPane.showInputDialog(f, message, "");
-        try
-        {
-            if (s.equals(""))
-            {
-                s = "1";
-            }
-            double val = Double.parseDouble(s);
-        } catch (NumberFormatException ex)
-        {
-            s = fetchUserDoubleAsString(message);
-        }
-        return s;
-    }
-    
-    private String fetchUserAntennaName(String message)
-    {
-        String s = (String) JOptionPane.showInputDialog(f, message, "");
-        if (s.equals(""))
-        {
-            s = "New Antenna " + (selectorStrings.size() - 11);
-        }
-        return s;
-    }
-    
 
     private double getMaxPow()
     {

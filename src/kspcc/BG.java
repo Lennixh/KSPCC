@@ -10,100 +10,99 @@ import javax.swing.*;
 
 public class BG extends JPanel
 {
-    
-    public JFrame f;
-    
+
+    public MainWindow f;
+
     public final Font GLOBALFONT = new Font("Sans Serif", Font.PLAIN, 10);
+
     public Color BGCOLOR = Color.BLACK;
     public Color FONTCOLOR = Color.WHITE;
-    
-    private final ArrayList<String> units = new ArrayList<>(); 
+    private final ArrayList<String> units = new ArrayList<>();
+
     private int unit = 1;
-    
     private JComboBox referenceBox;
+
     private JComboBox firstBodyBox;
     private JComboBox secondBodyBox;
-    
     private Output output;
-    
+
     private AntennaVisualizer av1;
+
     private AntennaVisualizer av2;
-    
     private OrbitVisualizer dp;
-        
+
     private OrbitCustomiser oc1;
+
     private OrbitCustomiser oc2;
-    
     private ConfigWindow cfgWindow;
+
     private InfoWindow iw;
     private JButton helpButton;
-    
     private JLabel firstBodyLabel;
-    private JLabel secondBodyLabel;
 
+    private JLabel secondBodyLabel;
     private ArrayList<Body> parentBodies = new ArrayList<>();
+
     private ArrayList<Body> availableBodies = new ArrayList<>();
-    
     public String sysCombo = "+---";
-    
+
     private ArrayList<Body> vanillaBodies = new ArrayList<>();
+
     private ArrayList<Body> OPMBodies = new ArrayList<>();
     private ArrayList<Body> MPEBodies = new ArrayList<>();
     private ArrayList<Body> solBodies = new ArrayList<>();
-    
     private ArrayList<Body> inSystemBodies = new ArrayList<>();
 
     private Body rBody;
+
     private Body tBody1;
     private Body tBody2;
-    
     public boolean useCustom1 = false;
+
     public boolean useCustom2 = false;
-    
     public Color color1 = Color.RED;
+
     public Color color2 = Color.CYAN;
-    
     public boolean configOpen = false;
+
     public boolean creatorOpen = false;
     public boolean darkMode = true;
-    
+
     public void init(KSPCC master)
     {
-        
-        this.f = master.frame;
 
-        JPanel panel = new JPanel();
-        
+        this.f = master.mainWindow;
+
         units.add("Tm");
         units.add("Gm");
         units.add("Mm");
         units.add("Km");
         units.add("m");
-        
+
         parentBodies.add(PrebuiltSystems.Sun);
-        
+
         rBody = PrebuiltSystems.Sun;
         tBody1 = PrebuiltSystems.vanillaBodies[3];  //Kerbin
         tBody2 = PrebuiltSystems.vanillaBodies[6];  //Duna
-        
+
         //VANILLA
         vanillaBodies.addAll(Arrays.asList(PrebuiltSystems.vanillaBodies));
-        
+
         //OPM
         OPMBodies.addAll(Arrays.asList(PrebuiltSystems.OPMBodies));
-        
+
         //MPE
         MPEBodies.addAll(Arrays.asList(PrebuiltSystems.MPEBodies));
-        
+
         //Sol/RSS  Dactyl is really weird, ask ballisticfox about it these values are for ICRF system refernce frame, and equatorial luna refernce frame
         solBodies.addAll(Arrays.asList(PrebuiltSystems.solBodies)); //if they are wrong, thats too damn bad
-        
+
         setBackground(BGCOLOR);
-        
+
         setPreferredSize(f.getPreferredSize());
         setBackground(BGCOLOR);
         setLayout(new GridBagLayout());
-        
+
         //The title
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 2;
@@ -114,7 +113,7 @@ public class BG extends JPanel
         title.setBackground(BGCOLOR);
         title.setForeground(FONTCOLOR);
         add(title, c);
-        
+
         //The Reference Body Selector Label
         c = new GridBagConstraints();
         c.gridx = 2;
@@ -126,7 +125,7 @@ public class BG extends JPanel
         refDescriptor.setBackground(BGCOLOR);
         refDescriptor.setForeground(FONTCOLOR);
         add(refDescriptor, c);
-        
+
         //The Reference Body Selector
         c = new GridBagConstraints();
         c.gridx = 2;
@@ -148,13 +147,13 @@ public class BG extends JPanel
             updateChildList(0,1);
             tBody1 = availableBodies.get(0);
             tBody2 = availableBodies.get(1);
-                    
+
             updateLabels();
         });
         referenceBox.setBackground(BGCOLOR);
         referenceBox.setForeground(FONTCOLOR);
         add(referenceBox, c);
-        
+
         //The First Body Selector Label
         c = new GridBagConstraints();
         c.gridx = 0;
@@ -165,7 +164,7 @@ public class BG extends JPanel
         firstBodyLabel.setBackground(BGCOLOR);
         firstBodyLabel.setForeground(color1);
         add(firstBodyLabel, c);
-        
+
         //The First Body Selector
         c = new GridBagConstraints();
         c.gridx = 0;
@@ -188,7 +187,7 @@ public class BG extends JPanel
         firstBodyBox.setBackground(BGCOLOR);
         firstBodyBox.setForeground(color1);
         add(firstBodyBox, c);
-        
+
         //The Second Body Selector Label
         c = new GridBagConstraints();
         c.gridx = 4;
@@ -199,7 +198,7 @@ public class BG extends JPanel
         secondBodyLabel.setBackground(BGCOLOR);
         secondBodyLabel.setForeground(color2);
         add(secondBodyLabel, c);
-        
+
         //The Second Body Selector
         c = new GridBagConstraints();
         c.gridx = 4;
@@ -222,7 +221,7 @@ public class BG extends JPanel
         secondBodyBox.setBackground(BGCOLOR);
         secondBodyBox.setForeground(color2);
         add(secondBodyBox, c);
-        
+
         //the orbital display
         dp = new OrbitVisualizer();
         c = new GridBagConstraints();
@@ -233,7 +232,7 @@ public class BG extends JPanel
         dp.setBackground(BGCOLOR);
         dp.setForeground(FONTCOLOR);
         add(dp,c);
-        
+
         //The Output
         output = new Output();
         output.init(this);
@@ -244,7 +243,7 @@ public class BG extends JPanel
         c.insets = new Insets(0,0,30,0);
         c.anchor = GridBagConstraints.PAGE_END;
         add(output, c);
-        
+
         //The Antenna selection stuff
         c = new GridBagConstraints();
         c.gridx = 0;
@@ -255,7 +254,7 @@ public class BG extends JPanel
         av1 = new AntennaVisualizer();
         av1.init(GLOBALFONT.deriveFont(Font.PLAIN, 12f), f, master);
         add(av1,c);
-        
+
         c = new GridBagConstraints();
         c.gridx = 4;
         c.gridy = 3;
@@ -273,7 +272,7 @@ public class BG extends JPanel
         oc1 = new OrbitCustomiser();
         oc1.init(GLOBALFONT.deriveFont(Font.PLAIN, 16f), color1, this, true);
         add(oc1,c);
-        
+
         c = new GridBagConstraints();
         c.gridx = 3;
         c.gridy = 3;
@@ -358,12 +357,12 @@ public class BG extends JPanel
 
         updateList();
     }
-    
+
     public void updateLabels()
     {
-        
+
         dp.orbits.clear();
-        
+
         if (!useCustom1)
         {
             dp.addOrbit(tBody1);
@@ -371,25 +370,25 @@ public class BG extends JPanel
         {
             dp.addOrbit(oc1.body);
         }
-        
+
         if (!useCustom2)
         {
             dp.addOrbit(tBody2);
         } else {
             dp.addOrbit(oc2.body);
         }
-        
-        
+
+
         dp.repaint();
-        
+
         oc1.setFontColor(color1);
         firstBodyLabel.setForeground(color1);
         firstBodyBox.setForeground(color1);
-        
+
         oc2.setFontColor(color2);
         secondBodyLabel.setForeground(color2);
         secondBodyBox.setForeground(color2);
-       
+
         double[] dists = new double[2];
         if (rBody == tBody1 && !useCustom1)
         {
@@ -419,7 +418,7 @@ public class BG extends JPanel
         {
             maxDistStrength = (3-(2*maxRDist))*(maxRDist*maxRDist);
         }
-        
+
         unit = getGoodUnit(maxRange);
         output.getLabel(0).setText("Maximum communications range: " + roundToDigits(maxRange/Math.pow(1000, 1-unit),2) + units.get(unit));
         unit = getGoodUnit(minDist);
@@ -428,8 +427,8 @@ public class BG extends JPanel
         output.getLabel(2).setText("Maximum distance: " + roundToDigits(maxDist/Math.pow(1000, 1-unit),2) + units.get(unit));
         output.getLabel(3).setText("Signal strength at minimum distance: " + roundToDigits(minDistStrength*100,2) + "%");
         output.getLabel(4).setText("Signal strength at maximum distance: " + roundToDigits(maxDistStrength*100,2) + "%");
-        
-        
+
+
     }
     
     public void updateList()

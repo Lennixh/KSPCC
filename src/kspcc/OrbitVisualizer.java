@@ -50,11 +50,9 @@ public class OrbitVisualizer extends JPanel {
         scale = Math.min(0.5d/(orbits.get(0).getSMA()), 0.5d/(orbits.get(1).getSMA()));
         
         if (orbits.get(0).getParent() == orbits.get(1)) {
-            orbits.get(1).setSMA(0);
             scale = 0.5d/orbits.get(0).getSMA();
         } 
         if (orbits.get(1).getParent() == orbits.get(0)){
-            orbits.get(0).setSMA(0);
             scale = 0.5d/orbits.get(1).getSMA();
         }
 
@@ -67,7 +65,8 @@ public class OrbitVisualizer extends JPanel {
         g.setColor(Color.GRAY);
         g.drawLine(d.width/2, 0, d.width/2, d.height);
         g.drawLine(0,d.height/2, d.width, d.height/2);
-
+        System.out.println("Body 1: "+orbits.get(0).getName());
+        System.out.println("Body 2: "+orbits.get(1).getName());
         for (int i = 0; i < orbitShapes.size(); i++) {
             g.setColor(orbitColors.get(i));
             g.drawPolygon(orbitShapes.get(i));

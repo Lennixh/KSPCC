@@ -10,7 +10,7 @@ public class KSPCC
 {
     public WindowManager windowManager;
 
-    public JFrame frame;
+    public MainWindow mainWindow;
 
     public BG bg;
 
@@ -20,29 +20,20 @@ public class KSPCC
     {
         windowManager = new WindowManager();
 
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-
-        java.net.URL mainWindowIcon = KSPCC.class.getResource("resources/radarSmallWhite.png");
-        ImageIcon feeshIcon = new ImageIcon(mainWindowIcon);
-
-        frame = new JFrame("KSPCC");
-        frame.setIconImage(feeshIcon.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(d);
-        frame.setUndecorated(true);
-
+        mainWindow = new MainWindow();
 
         bg = new BG();
         bg.init(this);
-        frame.add(bg, BorderLayout.CENTER);
 
-        frame.pack();
+        mainWindow.add(bg, BorderLayout.CENTER);
 
-        windowManager.addWindow(frame);
+        mainWindow.pack();
 
-        windowManager.openWindow(frame);
+        windowManager.addWindow(mainWindow);
 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        windowManager.openWindow(mainWindow);
+
+        mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         ccw = new CloseConfirmWindow(this, bg);
         windowManager.addWindow(ccw);
